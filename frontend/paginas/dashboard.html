@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard — GerObras</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+<div class="layout">
+
+    <!-- ── Sidebar ── -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <span class="icone-logo">🏗️</span>
+            <span>GerObras</span>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-secao">Principal</div>
+            <a href="dashboard.html" class="nav-item ativo">
+                <span class="icone">📊</span> Dashboard
+            </a>
+            <a href="obra.html" class="nav-item">
+                <span class="icone">🏢</span> Obras
+            </a>
+            <a href="tarefas.html" class="nav-item">
+                <span class="icone">✅</span> Tarefas
+            </a>
+
+            <div class="nav-secao">Análise</div>
+            <a href="relatorios.html" class="nav-item">
+                <span class="icone">📈</span> Relatórios
+            </a>
+        </nav>
+
+        <div class="sidebar-rodape">
+            <div class="usuario-info">
+                <div class="usuario-avatar" id="usuario-avatar">A</div>
+                <div>
+                    <div class="usuario-nome" id="usuario-nome">Carregando...</div>
+                    <div class="usuario-cargo" id="usuario-cargo"></div>
+                </div>
+            </div>
+            <button class="btn-logout" id="btn-logout">🚪 Sair</button>
+        </div>
+    </aside>
+
+    <!-- ── Conteúdo ── -->
+    <main class="conteudo">
+        <div class="topbar">
+            <button class="btn-menu" id="btn-menu">☰</button>
+            <div class="topbar-titulo">Dashboard</div>
+        </div>
+
+        <div class="pagina">
+
+            <!-- Métricas -->
+            <div class="grid-metricas">
+                <div class="card-metrica">
+                    <div class="metrica-icone azul">🏢</div>
+                    <div>
+                        <div class="metrica-valor" id="total-obras">—</div>
+                        <div class="metrica-label">Total de Obras</div>
+                    </div>
+                </div>
+                <div class="card-metrica">
+                    <div class="metrica-icone laranja">🔨</div>
+                    <div>
+                        <div class="metrica-valor" id="obras-andamento">—</div>
+                        <div class="metrica-label">Em Andamento</div>
+                    </div>
+                </div>
+                <div class="card-metrica">
+                    <div class="metrica-icone verde">✅</div>
+                    <div>
+                        <div class="metrica-valor" id="total-tarefas">—</div>
+                        <div class="metrica-label">Total de Tarefas</div>
+                    </div>
+                </div>
+                <div class="card-metrica">
+                    <div class="metrica-icone roxo">⏳</div>
+                    <div>
+                        <div class="metrica-valor" id="tarefas-pendentes">—</div>
+                        <div class="metrica-label">Tarefas Pendentes</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seções inferiores -->
+            <div class="grid-secoes">
+                <div class="card">
+                    <div class="secao-titulo">
+                        Obras Recentes
+                        <a href="obra.html">Ver todas →</a>
+                    </div>
+                    <div id="lista-obras-recentes">
+                        <p style="color:var(--cor-texto-claro);font-size:0.85rem">Carregando...</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="secao-titulo">Acesso Rápido</div>
+                    <div style="display:flex;flex-direction:column;gap:10px">
+                        <a href="obra.html" class="btn btn-primario" style="justify-content:center">🏢 Gerenciar Obras</a>
+                        <a href="tarefas.html" class="btn btn-secundario" style="justify-content:center">✅ Ver Tarefas</a>
+                        <a href="relatorios.html" class="btn btn-secundario" style="justify-content:center">📈 Relatórios</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<div id="toast-container"></div>
+
+<script src="../js/api.js"></script>
+<script src="../js/dashboard.js"></script>
+</body>
+</html>

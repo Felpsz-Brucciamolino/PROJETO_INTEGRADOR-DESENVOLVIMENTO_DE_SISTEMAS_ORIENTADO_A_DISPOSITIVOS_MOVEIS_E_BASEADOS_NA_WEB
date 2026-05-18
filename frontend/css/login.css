@@ -1,0 +1,122 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #050505;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* Caixa principal */
+.login-box {
+    width: 380px;
+    background: rgba(20, 20, 20, 0.95);
+    padding: 50px 40px;
+    border-radius: 8px;
+    box-shadow:
+        0 0 30px rgba(212, 175, 55, 0.08),
+        0 0 60px rgba(212, 175, 55, 0.04);
+    border: 1px solid rgba(212, 175, 55, 0.08);
+}
+
+/* Título */
+.login-box h2 {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 35px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* Grupos */
+.form-grupo {
+    margin-bottom: 20px;
+}
+
+.form-grupo label {
+    display: block;
+    color: #b5b5b5;
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+/* Inputs */
+.form-grupo input {
+    width: 100%;
+    background: transparent;
+    border: 1px solid #666;
+    border-radius: 4px;
+    padding: 12px;
+    color: white;
+    font-size: 14px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.form-grupo input:focus {
+    border-color: #d4af37;
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.25);
+}
+
+.form-grupo input::placeholder {
+    color: #666;
+}
+
+/* Link */
+.esqueci-senha {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 11px;
+    color: #777;
+    text-decoration: none;
+}
+
+.esqueci-senha:hover {
+    color: #d4af37;
+}
+
+/* Botão */
+.btn-login {
+    width: 100%;
+    background: #c89b3c;
+    border: none;
+    padding: 14px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 13px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: 0.3s;
+}
+
+.btn-login:hover {
+    background: #d8ab4a;
+    transform: translateY(-1px);
+}
+
+/* Erro */
+.erro-msg {
+    display: none;
+    background: rgba(255, 70, 70, 0.12);
+    border: 1px solid rgba(255, 70, 70, 0.25);
+    color: #ff8b8b;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-size: 13px;
+}
+
+/* Rodapé */
+.login-footer {
+    margin-top: 25px;
+    color: #888;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
