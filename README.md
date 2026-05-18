@@ -128,3 +128,210 @@ Este sistema resolve esses problemas oferecendo uma plataforma integrada para ge
 - *PostgreSQL* - Banco de dados
 
 ---
+
+## 📁 Estrutura do Projeto
+
+
+ProjetoIntegrador/
+├── backend/                          # Aplicação Spring Boot
+│   ├── src/
+│   │   └── main/
+│   │       ├── java/
+│   │       │   └── br/com/ProjetoIntegrador/
+│   │       │       ├── config/      # Configurações (Security, etc)
+│   │       │       ├── controller/  # Controladores REST
+│   │       │       │   ├── AuthController.java
+│   │       │       │   ├── ObraController.java
+│   │       │       │   └── TarefaController.java
+│   │       │       ├── dto/         # Data Transfer Objects
+│   │       │       ├── entity/      # Entidades JPA
+│   │       │       │   ├── Usuario.java
+│   │       │       │   ├── Obra.java
+│   │       │       │   └── Tarefa.java
+│   │       │       ├── repository/  # Repositórios JPA
+│   │       │       │   ├── UsuarioRepository.java
+│   │       │       │   ├── ObraRepository.java
+│   │       │       │   └── TarefaRepository.java
+│   │       │       ├── util/        # Utilitários
+│   │       │       │   └── HashUtil.java
+│   │       │       └── ProjetoIntegradorApplication.java
+│   │       └── resources/
+│   │           ├── application.properties  # Configurações da aplicação
+│   │           └── db/
+│   │               └── migration/
+│   │                   ├── V1__Criacao_banco_dados.sql
+│   │                   └── V2__Injecao_dados.sql
+│   ├── pom.xml                        # Dependências Maven
+│   └── mvnw, mvnw.cmd                 # Wrappers Maven
+├── frontend/                         # Interface Web
+│   ├── paginas/
+│   │   ├── login.html
+│   │   ├── dashboard.html
+│   │   ├── obra.html
+│   │   ├── tarefas.html
+│   │   └── relatorios.html
+│   ├── css/
+│   │   ├── style.css
+│   │   ├── login.css
+│   │   ├── dashboard.css
+│   │   ├── tarefas.css
+│   │   └── relatorios.css
+│   ├── js/
+│   │   ├── api.js
+│   │   ├── dashboard.js
+│   │   ├── data.js
+│   │   ├── tarefas.js
+│   │   └── relatorios.js
+│   └── assets/                       # Imagens e recursos estáticos
+├── index.html                        # Página inicial
+└── README.md                         # Este arquivo
+
+
+---
+
+## 📋 Pré-requisitos
+
+Antes de começar, certifique-se de ter instalado:
+
+* *Java 17* ou superior ([Download](https://www.oracle.com/java/technologies/javase/jdk17-downloads.html))
+* *Maven 3.6+* (ou use o wrapper incluído) ([Download](https://maven.apache.org/download.cgi))
+* *PostgreSQL 15+* ([Download](https://www.postgresql.org/download/))
+* *Git* ([Download](https://git-scm.com/downloads))
+* Um editor de código (VS Code, IntelliJ IDEA, etc.)
+
+---
+
+## 🚀 Como Instalar
+
+### 1. Clone o Repositório
+
+bash
+git clone https://github.com/seu-usuario/ProjetoIntegrador.git
+cd ProjetoIntegrador
+
+
+### 2. Configure o Banco de Dados PostgreSQL
+
+#### Crie o banco de dados:
+
+sql
+CREATE DATABASE gerenciamento_obras;
+
+
+#### Ou usando psql:
+
+bash
+psql -U postgres
+CREATE DATABASE gerenciamento_obras;
+\q
+
+
+### 3. Configure as Variáveis de Ambiente
+
+Crie ou edite o arquivo backend/src/main/resources/application.properties:
+
+properties
+spring.application.name=ProjetoIntegrador
+
+# Configurações do Banco de Dados
+spring.datasource.url=jdbc:postgresql://localhost:5432/gerenciamento_obras
+spring.datasource.username=postgres
+spring.datasource.password=SUA_SENHA_AQUI
+
+# Configurações JPA
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+
+# Porta do servidor
+server.port=5030
+
+
+*⚠️ Importante:* Nunca commit senhas reais no repositório. Use variáveis de ambiente em produção.
+
+### 4. Compile o Projeto Backend
+
+bash
+cd backend
+./mvnw clean install
+
+
+Ou se tiver Maven instalado:
+
+bash
+mvn clean install
+
+
+### 5. Configure o Frontend
+
+O frontend é estático e não requer instalação. Basta abrir os arquivos HTML no navegador ou usar um servidor local:
+
+bash
+# Usando Python (se tiver instalado)
+cd frontend
+python -m http.server 5501
+
+# Ou usando Node.js (se tiver instalado)
+npx serve -p 5501
+
+
+---
+
+## ▶️ Como Executar
+
+### Executando o Backend
+
+bash
+cd backend
+./mvnw spring-boot:run
+
+
+Ou se tiver Maven instalado:
+
+bash
+mvn spring-boot:run
+
+
+O backend estará disponível em: http://localhost:5030
+
+### Executando o Frontend
+
+Abra o arquivo index.html diretamente no navegador ou use um servidor local na porta 5501.
+
+A aplicação frontend estará disponível em: http://localhost:5501 (se usar servidor local)
+
+### Verificando a Instalação
+
+1. Acesse http://localhost:5030/obras para verificar se o backend está funcionando
+2. Acesse http://localhost:5501 (ou abra index.html) para ver a interface
+3. Tente fazer login com as credenciais de teste
+
+---
+
+## 🔐 Variáveis de Ambiente
+
+| Variável | Descrição | Valor Padrão | Obrigatório |
+|----------|-----------|--------------|-------------|
+| DB_PASSWORD | Senha do PostgreSQL | - | Sim |
+| DB_URL | URL de conexão com o banco | jdbc:postgresql://localhost:5432/gerenciamento_obras | Não |
+| DB_USERNAME | Usuário do PostgreSQL | postgres | Não |
+| SERVER_PORT | Porta do servidor | 5030 | Não |
+
+### Exemplo de Configuração para Produção
+
+bash
+export DB_PASSWORD=sua_senha_segura
+export DB_URL=jdbc:postgresql://seu-host:5432/gerenciamento_obras
+export DB_USERNAME=seu_usuario
+
+
+---
+
+## 🔌 API Endpoints
+
+### Autenticação
+
+#### Login
+```http
+POST /login
+Content-Type: application/json
