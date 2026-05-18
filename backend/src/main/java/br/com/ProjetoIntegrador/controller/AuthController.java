@@ -1,4 +1,4 @@
-package br.com.obras.ProjetoIntegrador.controller;
+package br.com.ProjetoIntegrador.controller;
 
 import br.com.obras.ProjetoIntegrador.dto.UsuarioDTO;
 import br.com.obras.ProjetoIntegrador.entity.Usuario;

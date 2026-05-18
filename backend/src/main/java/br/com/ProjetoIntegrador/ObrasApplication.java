@@ -1,5 +1,5 @@
 
-package br.com.obras.ProjetoIntegrador;
+package br.com.ProjetoIntegrador;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

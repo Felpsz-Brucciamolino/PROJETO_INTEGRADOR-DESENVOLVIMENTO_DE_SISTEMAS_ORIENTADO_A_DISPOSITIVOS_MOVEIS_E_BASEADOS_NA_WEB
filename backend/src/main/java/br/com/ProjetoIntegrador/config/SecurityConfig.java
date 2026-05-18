@@ -1,4 +1,4 @@
-package br.com.obras.ProjetoIntegrador.config;
+package br.com.ProjetoIntegrador.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

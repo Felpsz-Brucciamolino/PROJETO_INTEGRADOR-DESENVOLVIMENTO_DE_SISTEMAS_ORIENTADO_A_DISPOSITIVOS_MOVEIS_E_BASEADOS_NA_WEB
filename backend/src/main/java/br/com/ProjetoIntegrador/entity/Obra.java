@@ -1,4 +1,4 @@
-package br.com.obras.ProjetoIntegrador.entity;
+package br.com.ProjetoIntegrador.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;

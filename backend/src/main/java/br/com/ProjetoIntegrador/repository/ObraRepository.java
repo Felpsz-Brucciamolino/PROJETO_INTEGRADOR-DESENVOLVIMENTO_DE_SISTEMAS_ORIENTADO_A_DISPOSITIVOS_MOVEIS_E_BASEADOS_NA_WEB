@@ -1,4 +1,4 @@
-package br.com.obras.ProjetoIntegrador.repository;
+package br.com.ProjetoIntegrador.repository;
 
 import br.com.obras.ProjetoIntegrador.entity.Obra;
 import org.springframework.data.jpa.repository.JpaRepository;

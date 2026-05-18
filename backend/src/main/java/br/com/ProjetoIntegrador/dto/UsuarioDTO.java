@@ -1,4 +1,4 @@
-package br.com.obras.ProjetoIntegrador.dto;
+package br.com.ProjetoIntegrador.dto;
 
 public record UsuarioDTO (String email, String senha) {
 }

@@ -1,4 +1,4 @@
-package br.com.obras.ProjetoIntegrador.util;
+package br.com.ProjetoIntegrador.util;
 
 import java.security.MessageDigest;
 
