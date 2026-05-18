@@ -1,0 +1,57 @@
+Prova de Conceito (PoC): Sistema Híbrido de Gestão de Obras 
+
+1. Introdução e Descrição do Sistema 
+
+O sistema proposto pelo Grupo 23 consiste em uma solução digital híbrida (Web e Mobile) voltada para a modernização do canteiro de obras e a otimização da comunicação administrativa na construção civil. A Prova de Conceito (PoC) aqui apresentada visa demonstrar a viabilidade funcional desta solução, permitindo a centralização de dados que historicamente são geridos de forma manual ou fragmentada em planilhas e papel. 
+O núcleo do sistema é um Dashboard estratégico para engenheiros, alimentado em tempo real por registros de progresso e tarefas realizados diretamente no campo por mestres de obras e encarregados. 
+
+2. Justificativa e Objetivos 
+
+A construção civil enfrenta desafios críticos de monitoramento de progresso e falhas de comunicação que resultam em atrasos e estouros orçamentários. Esta solução justifica-se pela necessidade de: 
+Centralização de Informações: Eliminar o uso de ferramentas não integradas. 
+Atualização em Tempo Real: Permitir que o engenheiro visualize o status físico da obra sem a necessidade de deslocamentos constantes. 
+Redução de Retrabalho: Garantir que as instruções cheguem de forma clara e direta aos executores. 
+
+3. Vantagens e Desvantagens do Modelo 
+
+A adoção desta arquitetura tecnológica traz impactos diretos na operação: 
+Vantagens 
+Onipresença (Acessibilidade): Por ser um sistema web, pode ser acessado de qualquer dispositivo com navegador, sem necessidade de instalações complexas. 
+Rastreabilidade: O uso de bancos de dados SQL permite auditoria completa de quem realizou cada tarefa e quando. 
+Escalabilidade: A arquitetura baseada em APIs REST permite que o sistema cresça e suporte novos módulos ou aplicativos nativos no futuro. 
+Desvantagens e Riscos 
+Dependência de Conectividade: Por ser focado em nuvem (Vercel), o sistema exige internet estável, o que pode ser um desafio em canteiros remotos. 
+Barreira Cultural: Profissionais com baixa literacia digital (Persona Carlos) podem oferecer resistência inicial a sistemas complexos. 
+
+4. Preparação do Ambiente e Infraestrutura 
+
+Para garantir a colaboração síncrona e o deploy contínuo, a equipe adotou as seguintes tecnologias: 
+IDE Base: Visual Studio Code (VS Code) para todas as frentes de desenvolvimento. 
+Linguagens Frontend: HTML5, CSS3 e JavaScript (foco em responsividade). 
+Linguagem Backend: Python, utilizando o framework Flask ou FastAPI para a construção de APIs RESTful. 
+Versionamento: Git para controle local e GitHub como repositório centralizado. 
+Hospedagem e Deploy: Vercel, integrada ao GitHub para atualização automática do protótipo funcional a cada novo "push". 
+SGBD: SQL (SQLite para desenvolvimento local ou PostgreSQL para produção). 
+
+5. Planejamento de Interface e UX (Telas) 
+
+O planejamento seguiu os requisitos de usabilidade para as duas personas principais: João (Engenheiro) e Carlos (Mestre de Obras). 
+index.html (Login): Portal de entrada seguro com autenticação de usuário e senha. 
+dashboard.html (Página Principal): Exibição de métricas consolidadas (Obras Ativas, Concluídas, Em Pausa) e lista rápida de responsáveis por cada projeto. 
+obra.html (Gestão de Obras): Interface detalhada para cadastro de novos empreendimentos, clientes e endereços (Operações CRUD). 
+tarefas.html (Controle Operacional): Engrenagem do sistema onde tarefas são delegadas, prazos são definidos e o status de execução é alterado. 
+relatorios.html (Análise de Performance): Tabela consolidada com indicadores visuais (barras de progresso) para medir o Percentual de Obra Concluída (POC). 
+
+6. Desenvolvimento Backend e Banco de Dados 
+
+A lógica do servidor será responsável por processar as requisições do frontend e garantir a integridade dos dados no repositório SQL. 
+APIs REST: Endpoints modulares para autenticação, listagem de obras e atualização de tarefas em formato JSON. 
+Modelagem de Dados: Estrutura relacional conectando tabelas de Usuários, Projetos e Tarefas através de chaves primárias e estrangeiras. 
+Segurança: Implementação de validação de acesso para garantir que apenas usuários autorizados alterem dados críticos da obra. 
+
+7. Validação e Entrega do Protótipo 
+
+A validação desta PoC será realizada através de: 
+Link de Deploy: URL pública gerada pela Vercel para acesso ao sistema funcional. 
+Repositório GitHub: Código-fonte aberto para auditoria técnica. 
+Vídeo Demonstrativo: Gravação simulando a jornada do usuário, do cadastro da obra pelo engenheiro à conclusão da tarefa pelo mestre de obras. 
