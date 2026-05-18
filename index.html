@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GerObras — Sistema de Gerenciamento de Obras</title>
+    <link rel="stylesheet" href="frontend/css/style.css">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        }
+
+        .splash {
+            text-align: center;
+            color: white;
+        }
+
+        .splash-icone {
+            font-size: 4rem;
+            margin-bottom: 16px;
+            animation: pulso 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulso {
+            0%, 100% { transform: scale(1); }
+            50%       { transform: scale(1.08); }
+        }
+
+        .splash h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .splash p {
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 28px;
+        }
+
+        .splash .btn-primario {
+            font-size: 1rem;
+            padding: 12px 28px;
+        }
+    </style>
+</head>
+<body>
+    <div class="splash">
+        <div class="splash-icone">🏗️</div>
+        <h1>GerObras</h1>
+        <p>Sistema de Gerenciamento de Obras</p>
+        <a href="frontend/paginas/login.html" class="btn btn-primario">Entrar no Sistema →</a>
+    </div>
+
+    <script>
+        // se ja estiver logado vai direto pro dashboard
+        if (sessionStorage.getItem("usuario")) {
+            window.location.href = "frontend/paginas/dashboard.html";
+        }
+    </script>
+</body>
+</html>

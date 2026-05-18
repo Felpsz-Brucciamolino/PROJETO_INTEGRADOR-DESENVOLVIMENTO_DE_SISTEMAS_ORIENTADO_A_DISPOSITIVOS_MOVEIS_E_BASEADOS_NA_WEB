@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarefas — GerObras</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/tarefas.css">
+</head>
+<body>
+<div class="layout">
+
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <span class="icone-logo">🏗️</span><span>GerObras</span>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-secao">Principal</div>
+            <a href="dashboard.html" class="nav-item"><span class="icone">📊</span> Dashboard</a>
+            <a href="obra.html"      class="nav-item"><span class="icone">🏢</span> Obras</a>
+            <a href="tarefas.html"   class="nav-item ativo"><span class="icone">✅</span> Tarefas</a>
+            <div class="nav-secao">Análise</div>
+            <a href="relatorios.html" class="nav-item"><span class="icone">📈</span> Relatórios</a>
+        </nav>
+        <div class="sidebar-rodape">
+            <div class="usuario-info">
+                <div class="usuario-avatar" id="usuario-avatar">A</div>
+                <div>
+                    <div class="usuario-nome"  id="usuario-nome">—</div>
+                    <div class="usuario-cargo" id="usuario-cargo"></div>
+                </div>
+            </div>
+            <button class="btn-logout" id="btn-logout">🚪 Sair</button>
+        </div>
+    </aside>
+
+    <main class="conteudo">
+        <div class="topbar">
+            <button class="btn-menu" id="btn-menu">☰</button>
+            <div class="topbar-titulo">Tarefas</div>
+            <div class="topbar-acoes">
+                <button class="btn btn-primario" id="btn-nova-tarefa">+ Nova Tarefa</button>
+            </div>
+        </div>
+
+        <div class="pagina">
+
+            <!-- Toolbar de filtros -->
+            <div class="toolbar">
+                <div class="toolbar-busca">
+                    <span class="icone-busca">🔍</span>
+                    <input type="text" id="busca" placeholder="Buscar tarefa ou responsável...">
+                </div>
+                <div class="filtros">
+                    <select id="filtro-obra" class="select-obra">
+                        <option value="">Todas as obras</option>
+                    </select>
+                    <select id="filtro-status">
+                        <option value="">Todos status</option>
+                        <option value="pendente">Pendente</option>
+                        <option value="em_andamento">Em Andamento</option>
+                        <option value="concluida">Concluída</option>
+                        <option value="cancelada">Cancelada</option>
+                    </select>
+                    <select id="filtro-prioridade">
+                        <option value="">Todas prioridades</option>
+                        <option value="urgente">Urgente</option>
+                        <option value="alta">Alta</option>
+                        <option value="media">Média</option>
+                        <option value="baixa">Baixa</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Kanban -->
+            <div class="kanban">
+                <!-- Pendente -->
+                <div class="kanban-coluna">
+                    <div class="kanban-header">
+                        <div class="kanban-titulo">⏳ Pendente</div>
+                        <span class="kanban-count" id="count-pendente">0</span>
+                    </div>
+                    <div class="kanban-cards" id="col-pendente"></div>
+                </div>
+                <!-- Em Andamento -->
+                <div class="kanban-coluna">
+                    <div class="kanban-header">
+                        <div class="kanban-titulo">🔨 Em Andamento</div>
+                        <span class="kanban-count" id="count-em_andamento">0</span>
+                    </div>
+                    <div class="kanban-cards" id="col-andamento"></div>
+                </div>
+                <!-- Concluída -->
+                <div class="kanban-coluna">
+                    <div class="kanban-header">
+                        <div class="kanban-titulo">✅ Concluída</div>
+                        <span class="kanban-count" id="count-concluida">0</span>
+                    </div>
+                    <div class="kanban-cards" id="col-concluida"></div>
+                </div>
+                <!-- Cancelada -->
+                <div class="kanban-coluna">
+                    <div class="kanban-header">
+                        <div class="kanban-titulo">❌ Cancelada</div>
+                        <span class="kanban-count" id="count-cancelada">0</span>
+                    </div>
+                    <div class="kanban-cards" id="col-cancelada"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- ── Modal Tarefa ── -->
+<div class="modal-overlay" id="modal-tarefa">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 id="modal-titulo">Nova Tarefa</h2>
+            <button class="modal-fechar" onclick="fecharModal()">✕</button>
+        </div>
+        <form id="form-tarefa">
+            <div class="form-grupo">
+                <label>Título *</label>
+                <input type="text" name="titulo" required placeholder="Ex: Instalação elétrica andar 1">
+            </div>
+            <div class="form-grupo">
+                <label>Obra *</label>
+                <select name="obra_id" required class="select-obra">
+                    <option value="">Selecione a obra</option>
+                </select>
+            </div>
+            <div class="form-linha">
+                <div class="form-grupo">
+                    <label>Status</label>
+                    <select name="status">
+                        <option value="pendente">Pendente</option>
+                        <option value="em_andamento">Em Andamento</option>
+                        <option value="concluida">Concluída</option>
+                        <option value="cancelada">Cancelada</option>
+                    </select>
+                </div>
+                <div class="form-grupo">
+                    <label>Prioridade</label>
+                    <select name="prioridade">
+                        <option value="baixa">Baixa</option>
+                        <option value="media" selected>Média</option>
+                        <option value="alta">Alta</option>
+                        <option value="urgente">Urgente</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-linha">
+                <div class="form-grupo">
+                    <label>Responsável</label>
+                    <input type="text" name="responsavel" placeholder="Nome do responsável">
+                </div>
+                <div class="form-grupo">
+                    <label>Prazo</label>
+                    <input type="date" name="prazo">
+                </div>
+            </div>
+            <div class="form-grupo">
+                <label>Descrição</label>
+                <textarea name="descricao" placeholder="Detalhes da tarefa..."></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secundario" id="btn-cancelar">Cancelar</button>
+                <button type="submit" class="btn btn-primario">💾 Salvar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script src="../js/api.js"></script>
+<script src="../js/tarefas.js"></script>
+<script>
+    // Inicializa sidebar
+    document.addEventListener("DOMContentLoaded", () => {
+        const usuario = verificarSessao();
+        document.getElementById("usuario-nome").textContent   = usuario.nome;
+        document.getElementById("usuario-cargo").textContent  = usuario.cargo;
+        document.getElementById("usuario-avatar").textContent = usuario.nome[0];
+        document.getElementById("btn-logout").addEventListener("click", async () => {
+            await Auth.logout(); sessionStorage.clear(); window.location.href = "login.html";
+        });
+        document.getElementById("btn-menu").addEventListener("click", () => {
+            document.querySelector(".sidebar").classList.toggle("aberta");
+        });
+    });
+</script>
+</body>
+</html>

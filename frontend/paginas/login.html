@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login — GerObras</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        }
+
+        .login-box {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 24px 48px rgba(0,0,0,0.3);
+        }
+
+        .login-logo {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .login-logo .icone { font-size: 2.5rem; }
+
+        .login-logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--cor-secundaria);
+            margin-top: 8px;
+        }
+
+        .login-logo p {
+            font-size: 0.85rem;
+            color: var(--cor-texto-claro);
+        }
+
+        .erro-msg {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 10px 14px;
+            border-radius: var(--raio);
+            font-size: 0.85rem;
+            margin-bottom: 16px;
+            display: none;
+        }
+
+        .btn-login {
+            width: 100%;
+            justify-content: center;
+            padding: 12px;
+            font-size: 1rem;
+            margin-top: 4px;
+        }
+
+        .login-rodape {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.78rem;
+            color: var(--cor-texto-claro);
+        }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <div class="login-logo">
+            <div class="icone">🏗️</div>
+            <h1>GerObras</h1>
+            <p>Gerenciamento de Obras</p>
+        </div>
+
+        <div class="erro-msg" id="erro-msg"></div>
+
+        <form id="form-login">
+            <div class="form-grupo">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email"
+                       placeholder="admin@obras.com" required autofocus>
+            </div>
+
+            <div class="form-grupo">
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" name="senha"
+                       placeholder="••••••••" required>
+            </div>
+
+            <button type="submit" class="btn btn-primario btn-login" id="btn-entrar">
+                Entrar
+            </button>
+        </form>
+
+        <div class="login-rodape">
+            Login padrão: <strong>admin@obras.com</strong> / <strong>admin123</strong>
+        </div>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script>
+        // Se já logado, vai ao dashboard
+        if (sessionStorage.getItem("usuario")) {
+            window.location.href = "dashboard.html";
+        }
+
+        document.getElementById("form-login").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById("btn-entrar");
+            const erro = document.getElementById("erro-msg");
+            erro.style.display = "none";
+            btn.textContent = "Entrando...";
+            btn.disabled = true;
+
+            const email = document.getElementById("email").value;
+            const senha = document.getElementById("senha").value;
+
+            const res = await Auth.login(email, senha);
+
+            if (res.sucesso) {
+                sessionStorage.setItem("usuario", JSON.stringify(res.dados.usuario));
+                window.location.href = "dashboard.html";
+            } else {
+                erro.textContent = res.erro || "Erro ao fazer login";
+                erro.style.display = "block";
+                btn.textContent = "Entrar";
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

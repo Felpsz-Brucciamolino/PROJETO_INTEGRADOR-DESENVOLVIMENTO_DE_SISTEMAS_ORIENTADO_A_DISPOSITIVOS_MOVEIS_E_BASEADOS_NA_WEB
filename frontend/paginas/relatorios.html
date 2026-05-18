@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatórios — GerObras</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/relatorios.css">
+</head>
+<body>
+<div class="layout">
+
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <span class="icone-logo">🏗️</span><span>GerObras</span>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-secao">Principal</div>
+            <a href="dashboard.html"  class="nav-item"><span class="icone">📊</span> Dashboard</a>
+            <a href="obra.html"       class="nav-item"><span class="icone">🏢</span> Obras</a>
+            <a href="tarefas.html"    class="nav-item"><span class="icone">✅</span> Tarefas</a>
+            <div class="nav-secao">Análise</div>
+            <a href="relatorios.html" class="nav-item ativo"><span class="icone">📈</span> Relatórios</a>
+        </nav>
+        <div class="sidebar-rodape">
+            <div class="usuario-info">
+                <div class="usuario-avatar" id="usuario-avatar">A</div>
+                <div>
+                    <div class="usuario-nome"  id="usuario-nome">—</div>
+                    <div class="usuario-cargo" id="usuario-cargo"></div>
+                </div>
+            </div>
+            <button class="btn-logout" id="btn-logout">🚪 Sair</button>
+        </div>
+    </aside>
+
+    <main class="conteudo">
+        <div class="topbar">
+            <button class="btn-menu" id="btn-menu">☰</button>
+            <div class="topbar-titulo">Relatórios</div>
+        </div>
+
+        <div class="pagina">
+
+            <!-- Filtro -->
+            <div class="relatorio-filtros">
+                <div class="form-grupo">
+                    <label>Filtrar por Obra</label>
+                    <select id="filtro-obra">
+                        <option value="">Geral (todas as obras)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- KPIs -->
+            <div class="grid-kpi">
+                <div class="kpi-card">
+                    <div class="kpi-valor" id="kpi-total-obras">—</div>
+                    <div class="kpi-label">Total de Obras</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-valor" id="kpi-andamento">—</div>
+                    <div class="kpi-label">Em Andamento</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-valor" id="kpi-concluidas">—</div>
+                    <div class="kpi-label">Concluídas</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-valor" id="kpi-total-tarefas">—</div>
+                    <div class="kpi-label">Total de Tarefas</div>
+                </div>
+            </div>
+
+            <!-- Gráficos -->
+            <div class="grid-graficos">
+                <div class="grafico-card">
+                    <div class="grafico-titulo">📊 Obras por Status</div>
+                    <div class="grafico-area" id="grafico-obras">
+                        <p style="color:var(--cor-texto-claro);font-size:0.85rem">Carregando...</p>
+                    </div>
+                </div>
+                <div class="grafico-card">
+                    <div class="grafico-titulo">📊 Tarefas por Status</div>
+                    <div class="grafico-area" id="grafico-tarefas">
+                        <p style="color:var(--cor-texto-claro);font-size:0.85rem">Carregando...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabela de tarefas (visível quando filtra por obra) -->
+            <div class="relatorio-tabela-card" id="card-tabela-tarefas" style="display:none">
+                <div class="secao-titulo" style="font-size:0.95rem;font-weight:700;margin-bottom:16px">
+                    📋 Tarefas da Obra
+                </div>
+                <div class="tabela-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Título</th>
+                                <th>Status</th>
+                                <th>Prioridade</th>
+                                <th>Responsável</th>
+                                <th>Prazo</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabela-tarefas-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<div id="toast-container"></div>
+
+<script src="../js/api.js"></script>
+<script src="../js/relatorios.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const usuario = verificarSessao();
+        document.getElementById("usuario-nome").textContent   = usuario.nome;
+        document.getElementById("usuario-cargo").textContent  = usuario.cargo;
+        document.getElementById("usuario-avatar").textContent = usuario.nome[0];
+        document.getElementById("btn-logout").addEventListener("click", async () => {
+            await Auth.logout(); sessionStorage.clear(); window.location.href = "login.html";
+        });
+        document.getElementById("btn-menu").addEventListener("click", () => {
+            document.querySelector(".sidebar").classList.toggle("aberta");
+        });
+
+        // Mostrar tabela de tarefas ao selecionar obra específica
+        document.getElementById("filtro-obra").addEventListener("change", (e) => {
+            const card = document.getElementById("card-tabela-tarefas");
+            card.style.display = e.target.value ? "block" : "none";
+        });
+    });
+</script>
+</body>
+</html>

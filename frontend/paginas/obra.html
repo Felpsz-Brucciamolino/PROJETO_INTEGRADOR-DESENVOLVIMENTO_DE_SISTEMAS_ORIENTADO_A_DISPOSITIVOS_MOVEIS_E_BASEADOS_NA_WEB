@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obras — GerObras</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+<div class="layout">
+
+    <!-- ── Sidebar ── -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <span class="icone-logo">🏗️</span>
+            <span>GerObras</span>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-secao">Principal</div>
+            <a href="dashboard.html" class="nav-item"><span class="icone">📊</span> Dashboard</a>
+            <a href="obra.html"      class="nav-item ativo"><span class="icone">🏢</span> Obras</a>
+            <a href="tarefas.html"   class="nav-item"><span class="icone">✅</span> Tarefas</a>
+            <div class="nav-secao">Análise</div>
+            <a href="relatorios.html" class="nav-item"><span class="icone">📈</span> Relatórios</a>
+        </nav>
+        <div class="sidebar-rodape">
+            <div class="usuario-info">
+                <div class="usuario-avatar" id="usuario-avatar">A</div>
+                <div>
+                    <div class="usuario-nome" id="usuario-nome">—</div>
+                    <div class="usuario-cargo" id="usuario-cargo"></div>
+                </div>
+            </div>
+            <button class="btn-logout" id="btn-logout">🚪 Sair</button>
+        </div>
+    </aside>
+
+    <!-- ── Conteúdo ── -->
+    <main class="conteudo">
+        <div class="topbar">
+            <button class="btn-menu" id="btn-menu">☰</button>
+            <div class="topbar-titulo">Obras</div>
+            <div class="topbar-acoes">
+                <button class="btn btn-primario" id="btn-nova-obra">+ Nova Obra</button>
+            </div>
+        </div>
+
+        <div class="pagina">
+
+            <!-- Barra de busca -->
+            <div style="display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap">
+                <input type="text" id="busca" placeholder="🔍  Buscar obra..."
+                       style="flex:1;min-width:200px;padding:9px 14px;border:1px solid var(--cor-borda);border-radius:var(--raio);font-size:0.875rem">
+                <select id="filtro-status"
+                        style="padding:9px 12px;border:1px solid var(--cor-borda);border-radius:var(--raio);font-size:0.875rem">
+                    <option value="">Todos os status</option>
+                    <option value="planejamento">Planejamento</option>
+                    <option value="em_andamento">Em Andamento</option>
+                    <option value="pausada">Pausada</option>
+                    <option value="concluida">Concluída</option>
+                    <option value="cancelada">Cancelada</option>
+                </select>
+            </div>
+
+            <!-- Tabela -->
+            <div class="card">
+                <div class="tabela-wrapper">
+                    <table id="tabela-obras">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nome</th>
+                                <th>Endereço</th>
+                                <th>Status</th>
+                                <th>Orçamento</th>
+                                <th>Início</th>
+                                <th>Previsão Fim</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-obras">
+                            <tr><td colspan="8" style="text-align:center;padding:24px;color:var(--cor-texto-claro)">Carregando...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- ── Modal Nova/Editar Obra ── -->
+<div class="modal-overlay" id="modal-obra">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 id="modal-titulo">Nova Obra</h2>
+            <button class="modal-fechar" id="btn-fechar-modal">✕</button>
+        </div>
+
+        <form id="form-obra">
+            <div class="form-grupo">
+                <label>Nome da Obra *</label>
+                <input type="text" name="nome" required placeholder="Ex: Residencial Parque Verde">
+            </div>
+            <div class="form-grupo">
+                <label>Endereço *</label>
+                <input type="text" name="endereco" required placeholder="Rua, número, cidade/UF">
+            </div>
+            <div class="form-linha">
+                <div class="form-grupo">
+                    <label>Status *</label>
+                    <select name="status" required>
+                        <option value="planejamento">Planejamento</option>
+                        <option value="em_andamento">Em Andamento</option>
+                        <option value="pausada">Pausada</option>
+                        <option value="concluida">Concluída</option>
+                        <option value="cancelada">Cancelada</option>
+                    </select>
+                </div>
+                <div class="form-grupo">
+                    <label>Orçamento (R$)</label>
+                    <input type="number" name="orcamento" min="0" step="0.01" placeholder="0,00">
+                </div>
+            </div>
+            <div class="form-linha">
+                <div class="form-grupo">
+                    <label>Data de Início</label>
+                    <input type="date" name="data_inicio">
+                </div>
+                <div class="form-grupo">
+                    <label>Previsão de Fim</label>
+                    <input type="date" name="data_prevista_fim">
+                </div>
+            </div>
+            <div class="form-grupo">
+                <label>Descrição</label>
+                <textarea name="descricao" placeholder="Detalhes sobre a obra..."></textarea>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secundario" id="btn-cancelar">Cancelar</button>
+                <button type="submit" class="btn btn-primario">💾 Salvar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script src="../js/api.js"></script>
+<script>
+    let obraEditando = null;
+    let todasObras = [];
+
+    // Init
+    document.addEventListener("DOMContentLoaded", async () => {
+        const usuario = verificarSessao();
+        document.getElementById("usuario-nome").textContent  = usuario.nome;
+        document.getElementById("usuario-cargo").textContent = usuario.cargo;
+        document.getElementById("usuario-avatar").textContent = usuario.nome[0];
+
+        await carregarObras();
+
+        document.getElementById("btn-nova-obra").addEventListener("click",  abrirModalNova);
+        document.getElementById("btn-fechar-modal").addEventListener("click", fecharModal);
+        document.getElementById("btn-cancelar").addEventListener("click",    fecharModal);
+        document.getElementById("form-obra").addEventListener("submit",      salvarObra);
+        document.getElementById("busca").addEventListener("input",           filtrar);
+        document.getElementById("filtro-status").addEventListener("change",  filtrar);
+        document.getElementById("btn-logout").addEventListener("click", async () => {
+            await Auth.logout(); sessionStorage.clear(); window.location.href = "login.html";
+        });
+        document.getElementById("btn-menu").addEventListener("click", () => {
+            document.querySelector(".sidebar").classList.toggle("aberta");
+        });
+    });
+
+    async function carregarObras() {
+        const res = await ObrasAPI.listar();
+        if (!res.sucesso) { toast("Erro ao carregar obras", "erro"); return; }
+        todasObras = res.dados;
+        renderTabela(todasObras);
+    }
+
+    function renderTabela(obras) {
+        const tbody = document.getElementById("tbody-obras");
+        if (obras.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:32px;color:var(--cor-texto-claro)">Nenhuma obra encontrada</td></tr>`;
+            return;
+        }
+        tbody.innerHTML = obras.map(o => `
+            <tr>
+                <td>${o.id}</td>
+                <td><strong>${o.nome}</strong></td>
+                <td style="max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${o.endereco}</td>
+                <td><span class="badge ${classBadge(o.status)}">${labelStatus(o.status)}</span></td>
+                <td>${formatarMoeda(o.orcamento)}</td>
+                <td>${formatarData(o.data_inicio)}</td>
+                <td>${formatarData(o.data_prevista_fim)}</td>
+                <td>
+                    <div style="display:flex;gap:6px">
+                        <button class="btn btn-sm btn-secundario" onclick="editarObra(${o.id})">✏️</button>
+                        <button class="btn btn-sm btn-perigo"     onclick="excluirObra(${o.id})">🗑️</button>
+                    </div>
+                </td>
+            </tr>
+        `).join("");
+    }
+
+    function filtrar() {
+        const busca  = document.getElementById("busca").value.toLowerCase();
+        const status = document.getElementById("filtro-status").value;
+        const filtradas = todasObras.filter(o => {
+            const okBusca  = !busca  || o.nome.toLowerCase().includes(busca) || o.endereco.toLowerCase().includes(busca);
+            const okStatus = !status || o.status === status;
+            return okBusca && okStatus;
+        });
+        renderTabela(filtradas);
+    }
+
+    function abrirModalNova() {
+        obraEditando = null;
+        document.getElementById("modal-titulo").textContent = "Nova Obra";
+        document.getElementById("form-obra").reset();
+        document.getElementById("modal-obra").classList.add("ativo");
+    }
+
+    async function editarObra(id) {
+        const res = await ObrasAPI.buscar(id);
+        if (!res.sucesso) { toast("Erro ao carregar obra", "erro"); return; }
+        obraEditando = res.dados;
+        document.getElementById("modal-titulo").textContent = "Editar Obra";
+        const f = document.getElementById("form-obra");
+        f.nome.value             = obraEditando.nome;
+        f.endereco.value         = obraEditando.endereco;
+        f.status.value           = obraEditando.status;
+        f.orcamento.value        = obraEditando.orcamento;
+        f.data_inicio.value      = obraEditando.data_inicio || "";
+        f.data_prevista_fim.value = obraEditando.data_prevista_fim || "";
+        f.descricao.value        = obraEditando.descricao || "";
+        document.getElementById("modal-obra").classList.add("ativo");
+    }
+
+    function fecharModal() {
+        document.getElementById("modal-obra").classList.remove("ativo");
+        obraEditando = null;
+    }
+
+    async function salvarObra(e) {
+        e.preventDefault();
+        const f = e.target;
+        const dados = {
+            nome:             f.nome.value,
+            endereco:         f.endereco.value,
+            status:           f.status.value,
+            orcamento:        f.orcamento.value || 0,
+            data_inicio:      f.data_inicio.value || null,
+            data_prevista_fim: f.data_prevista_fim.value || null,
+            descricao:        f.descricao.value
+        };
+        const res = obraEditando
+            ? await ObrasAPI.atualizar(obraEditando.id, dados)
+            : await ObrasAPI.criar(dados);
+        if (res.sucesso) {
+            toast(obraEditando ? "Obra atualizada!" : "Obra criada!", "sucesso");
+            fecharModal();
+            await carregarObras();
+        } else {
+            toast(res.erro, "erro");
+        }
+    }
+
+    async function excluirObra(id) {
+        if (!confirm("Tem certeza que deseja excluir esta obra? Todas as tarefas vinculadas também serão removidas.")) return;
+        const res = await ObrasAPI.deletar(id);
+        if (res.sucesso) {
+            toast("Obra excluída", "sucesso");
+            await carregarObras();
+        } else {
+            toast(res.erro, "erro");
+        }
+    }
+</script>
+</body>
+</html>
