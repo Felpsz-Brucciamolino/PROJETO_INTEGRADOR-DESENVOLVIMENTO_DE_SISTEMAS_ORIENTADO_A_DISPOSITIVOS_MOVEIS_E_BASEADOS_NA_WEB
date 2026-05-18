@@ -1,6 +1,7 @@
 /* =============================================
-   STYLE.CSS — Estilos globais / base
-   ============================================= */
+   GEROBRAS — STYLE.CSS
+   Tema Dark Gold
+============================================= */
 
 * {
     margin: 0;
@@ -9,30 +10,37 @@
 }
 
 :root {
-    --cor-primaria: #2563eb;
-    --cor-primaria-hover: #1d4ed8;
-    --cor-secundaria: #1e293b;
-    --cor-fundo: #f1f5f9;
-    --cor-branco: #ffffff;
-    --cor-texto: #334155;
-    --cor-texto-claro: #64748b;
-    --cor-borda: #e2e8f0;
-    --cor-sucesso: #16a34a;
-    --cor-perigo: #dc2626;
-    --cor-aviso: #d97706;
-    --cor-info: #0891b2;
-    --sombra: 0 1px 3px rgba(0,0,0,0.1);
-    --sombra-media: 0 4px 6px rgba(0,0,0,0.07);
-    --raio: 8px;
-    --raio-grande: 12px;
-    --fonte: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --cor-primaria: #c9a050;
+    --cor-primaria-hover: #ddb36a;
+
+    --cor-fundo: #121212;
+    --cor-secundaria: #1e1e1e;
+    --cor-card: #1e1e1e;
+
+    --cor-texto: #f5f5f5;
+    --cor-texto-claro: #9e9e9e;
+
+    --cor-borda: #2d2d2d;
+
+    --cor-sucesso: #3fb950;
+    --cor-perigo: #f85149;
+    --cor-aviso: #d29922;
+    --cor-info: #58a6ff;
+
+    --sombra: 0 4px 12px rgba(0,0,0,0.35);
+    --sombra-media: 0 8px 24px rgba(0,0,0,0.45);
+
+    --raio: 10px;
+    --raio-grande: 16px;
+
+    --fonte: 'Segoe UI', sans-serif;
 }
 
 body {
     font-family: var(--fonte);
-    background-color: var(--cor-fundo);
+    background: var(--cor-fundo);
     color: var(--cor-texto);
-    line-height: 1.6;
+    line-height: 1.5;
 }
 
 a {
@@ -40,113 +48,106 @@ a {
     color: inherit;
 }
 
-ul { list-style: none; }
+ul {
+    list-style: none;
+}
 
 button {
     cursor: pointer;
     font-family: var(--fonte);
+    transition: .25s;
 }
 
-input, select, textarea {
+input,
+select,
+textarea {
     font-family: var(--fonte);
 }
 
-/* --------------- */
+/* ===================== BOTÕES ===================== */
+
 .btn {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 9px 18px;
-    border-radius: var(--raio);
+    gap: 8px;
+    padding: 10px 18px;
     border: none;
-    font-size: 0.875rem;
+    border-radius: var(--raio);
+    font-size: 0.9rem;
     font-weight: 600;
-    transition: background 0.2s, transform 0.1s;
 }
 
-.btn:active { transform: scale(0.98); }
+.btn:active {
+    transform: scale(.97);
+}
 
 .btn-primario {
-    background-color: var(--cor-primaria);
-    color: white;
+    background: var(--cor-primaria);
+    color: #121212;
 }
-.btn-primario:hover { background-color: var(--cor-primaria-hover); }
+
+.btn-primario:hover {
+    background: var(--cor-primaria-hover);
+    box-shadow: 0 0 15px rgba(201,160,80,0.25);
+}
 
 .btn-secundario {
-    background-color: var(--cor-borda);
-    color: var(--cor-texto);
+    background: #2a2a2a;
+    color: white;
 }
-.btn-secundario:hover { background-color: #cbd5e1; }
+
+.btn-secundario:hover {
+    background: #353535;
+}
 
 .btn-perigo {
-    background-color: var(--cor-perigo);
+    background: var(--cor-perigo);
     color: white;
 }
-.btn-perigo:hover { background-color: #b91c1c; }
 
-.btn-sucesso {
-    background-color: var(--cor-sucesso);
-    color: white;
+.btn-perigo:hover {
+    opacity: .9;
 }
-.btn-sucesso:hover { background-color: #15803d; }
 
 .btn-sm {
-    padding: 5px 12px;
-    font-size: 0.8rem;
+    padding: 6px 12px;
+    font-size: .8rem;
 }
 
-/* --------------- */
-.badge {
-    display: inline-block;
-    padding: 3px 10px;
-    border-radius: 999px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: capitalize;
-}
+/* ===================== CARDS ===================== */
 
-.badge-planejamento  { background: #dbeafe; color: #1d4ed8; }
-.badge-em_andamento  { background: #fef9c3; color: #92400e; }
-.badge-pausada       { background: #fee2e2; color: #991b1b; }
-.badge-concluida     { background: #dcfce7; color: #15803d; }
-.badge-cancelada     { background: #f1f5f9; color: #64748b; }
-.badge-pendente      { background: #fef9c3; color: #92400e; }
-.badge-alta, .badge-urgente { background: #fee2e2; color: #991b1b; }
-.badge-media         { background: #fef9c3; color: #92400e; }
-.badge-baixa         { background: #dcfce7; color: #15803d; }
-
-/* --------------- */
 .card {
-    background: var(--cor-branco);
+    background: var(--cor-card);
+    border: 1px solid var(--cor-borda);
     border-radius: var(--raio-grande);
-    box-shadow: var(--sombra-media);
+    box-shadow: var(--sombra);
     padding: 24px;
 }
 
-/* --------------- */
+/* ===================== FORMULÁRIOS ===================== */
+
 .form-grupo {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    margin-bottom: 16px;
+    gap: 8px;
+    margin-bottom: 18px;
 }
 
 .form-grupo label {
-    font-size: 0.875rem;
+    font-size: .85rem;
     font-weight: 600;
-    color: var(--cor-texto);
+    color: var(--cor-primaria);
 }
 
 .form-grupo input,
 .form-grupo select,
 .form-grupo textarea {
-    padding: 10px 14px;
+    background: #151515;
     border: 1px solid var(--cor-borda);
     border-radius: var(--raio);
-    font-size: 0.875rem;
-    background: var(--cor-branco);
-    color: var(--cor-texto);
-    transition: border-color 0.2s;
+    padding: 12px 14px;
+    color: white;
+    font-size: .9rem;
 }
 
 .form-grupo input:focus,
@@ -154,10 +155,13 @@ input, select, textarea {
 .form-grupo textarea:focus {
     outline: none;
     border-color: var(--cor-primaria);
-    box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+    box-shadow: 0 0 0 3px rgba(201,160,80,0.15);
 }
 
-.form-grupo textarea { resize: vertical; min-height: 80px; }
+.form-grupo textarea {
+    resize: vertical;
+    min-height: 100px;
+}
 
 .form-linha {
     display: grid;
@@ -165,32 +169,73 @@ input, select, textarea {
     gap: 16px;
 }
 
-/* --------------- */
+/* ===================== BADGES ===================== */
+
+.badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: .75rem;
+    font-weight: 600;
+}
+
+.badge-pendente {
+    background: rgba(210,153,34,.15);
+    color: #f0c674;
+}
+
+.badge-em_andamento {
+    background: rgba(88,166,255,.15);
+    color: #58a6ff;
+}
+
+.badge-concluida {
+    background: rgba(63,185,80,.15);
+    color: #3fb950;
+}
+
+.badge-cancelada {
+    background: rgba(248,81,73,.15);
+    color: #f85149;
+}
+
+/* ===================== MODAL ===================== */
+
 .modal-overlay {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.4);
-    z-index: 1000;
+    background: rgba(0,0,0,.7);
+    backdrop-filter: blur(4px);
+    z-index: 999;
     align-items: center;
     justify-content: center;
 }
 
-.modal-overlay.ativo { display: flex; }
+.modal-overlay.ativo {
+    display: flex;
+}
 
 .modal {
-    background: var(--cor-branco);
+    background: var(--cor-card);
+    border: 1px solid var(--cor-borda);
     border-radius: var(--raio-grande);
     padding: 28px;
     width: 100%;
-    max-width: 520px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-    animation: slideUp 0.2s ease;
+    max-width: 560px;
+    box-shadow: var(--sombra-media);
+    animation: subir .25s ease;
 }
 
-@keyframes slideUp {
-    from { transform: translateY(20px); opacity: 0; }
-    to   { transform: translateY(0);    opacity: 1; }
+@keyframes subir {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 .modal-header {
@@ -200,103 +245,92 @@ input, select, textarea {
     margin-bottom: 20px;
 }
 
-.modal-header h2 { font-size: 1.1rem; }
+.modal-header h2 {
+    color: var(--cor-primaria);
+}
 
 .modal-fechar {
     background: none;
     border: none;
     font-size: 1.4rem;
-    color: var(--cor-texto-claro);
-    cursor: pointer;
-    line-height: 1;
+    color: #888;
 }
 
-.modal-fechar:hover { color: var(--cor-perigo); }
+.modal-fechar:hover {
+    color: var(--cor-perigo);
+}
 
 .modal-footer {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
-    margin-top: 20px;
-    padding-top: 16px;
-    border-top: 1px solid var(--cor-borda);
+    margin-top: 24px;
 }
 
-/* --------------- */
+/* ===================== TOAST ===================== */
+
 #toast-container {
     position: fixed;
     bottom: 24px;
     right: 24px;
     z-index: 9999;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
 }
 
 .toast {
-    padding: 12px 20px;
-    border-radius: var(--raio);
+    background: var(--cor-card);
     color: white;
-    font-size: 0.875rem;
-    font-weight: 500;
-    box-shadow: var(--sombra-media);
-    animation: toastIn 0.3s ease;
-    min-width: 260px;
-}
-
-@keyframes toastIn {
-    from { transform: translateX(40px); opacity: 0; }
-    to   { transform: translateX(0);    opacity: 1; }
-}
-
-.toast-sucesso { background: var(--cor-sucesso); }
-.toast-erro    { background: var(--cor-perigo); }
-.toast-aviso   { background: var(--cor-aviso); }
-
-/* --------------- */
-.tabela-wrapper {
-    overflow-x: auto;
+    padding: 14px 20px;
+    border-left: 4px solid var(--cor-primaria);
     border-radius: var(--raio);
+    margin-top: 10px;
+    box-shadow: var(--sombra);
 }
+
+/* ===================== TABELAS ===================== */
 
 table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.875rem;
+}
+
+thead {
+    background: #181818;
 }
 
 thead th {
-    background: var(--cor-fundo);
-    padding: 11px 14px;
+    padding: 14px;
     text-align: left;
-    font-weight: 600;
-    color: var(--cor-texto-claro);
-    border-bottom: 2px solid var(--cor-borda);
+    color: var(--cor-primaria);
 }
 
 tbody tr {
     border-bottom: 1px solid var(--cor-borda);
-    transition: background 0.15s;
 }
 
-tbody tr:hover { background: #f8fafc; }
+tbody tr:hover {
+    background: rgba(201,160,80,0.05);
+}
 
 tbody td {
-    padding: 12px 14px;
-    vertical-align: middle;
+    padding: 14px;
 }
 
-/* --------------- */
+/* ===================== ESTADO VAZIO ===================== */
+
 .estado-vazio {
     text-align: center;
-    padding: 48px 24px;
+    padding: 60px 20px;
     color: var(--cor-texto-claro);
 }
 
-.estado-vazio p { margin-top: 10px; font-size: 0.9rem; }
+/* ===================== RESPONSIVO ===================== */
 
-/* --------------- */
 @media (max-width: 768px) {
-    .form-linha { grid-template-columns: 1fr; }
-    .modal { margin: 16px; }
+    .form-linha {
+        grid-template-columns: 1fr;
+    }
+
+    .modal {
+        margin: 16px;
+    }
 }

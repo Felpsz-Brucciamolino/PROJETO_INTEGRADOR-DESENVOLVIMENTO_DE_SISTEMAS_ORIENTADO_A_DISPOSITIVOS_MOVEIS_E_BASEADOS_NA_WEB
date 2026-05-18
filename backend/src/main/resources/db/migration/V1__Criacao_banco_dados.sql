@@ -1,4 +1,3 @@
-
 CREATE TYPE cargo_usuario AS ENUM (
     'admin',
     'engenheiro',

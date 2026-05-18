@@ -1,7 +1,12 @@
 package br.com.ProjetoIntegrador.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "obras")
@@ -15,12 +20,27 @@ public class Obra {
     private String cliente;
     private String endereco;
 
+    @JsonIgnoreProperties("tarefas")
+    @OneToMany(mappedBy = "obra")
+    private List<Tarefa> tarefas;
+
+    @Column(name = "orcamento")
+    @JsonProperty("orcamento")
+    private BigDecimal orcamento;
+
+    @Column(name = "data_inicio")
+    @JsonProperty("data_inicio")
     private LocalDate dataInicio;
+
+    @Column(name = "data_prevista_fim")
+    @JsonProperty("data_prevista_fim")
     private LocalDate previsaoEntrega;
 
-    private String status;
-
+    @JsonProperty("descricao")
     private String observacoes;
+
+    @Column(name = "status")
+    private String status;
 
     @ManyToOne
     @JoinColumn(name = "responsavel_id")
@@ -57,6 +77,16 @@ public class Obra {
     public void setEndereco(String endereco){
         this.endereco = endereco;
     }
+
+    public BigDecimal getOrcamento() {
+        return orcamento;
+    }
+
+    public void setOrcamento(BigDecimal orcamento) {
+        this.orcamento = orcamento;
+    }
+
+
 
     public LocalDate getDataInicio() {
         return dataInicio;

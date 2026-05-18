@@ -30,25 +30,39 @@ async function carregarObras() {
     const tarefasPendentesEl = document.getElementById("tarefas-pendentes");
     const lista = document.getElementById("lista-obras-recentes");
 
-    if (!totalObrasEl || !obrasAndamentoEl || !totalTarefasEl || !tarefasPendentesEl || !lista) {
-        return;
-    }
+    const resultadoObras = await ObrasAPI.listar();
+    const resultadoTarefas = await TarefasAPI.listar();
 
-    const resultado = await ObrasAPI.listar();
-    if (!resultado.sucesso) {
+    console.log("OBRAS RAW:", resultadoObras);
+    console.log("TAREFAS RAW:", resultadoTarefas);
+
+
+    if (!resultadoObras.sucesso || !resultadoTarefas.sucesso) {
         totalObrasEl.textContent = "0";
         obrasAndamentoEl.textContent = "0";
         totalTarefasEl.textContent = "0";
         tarefasPendentesEl.textContent = "0";
-        lista.innerHTML = "<p>Não foi possível carregar as obras.</p>";
+        lista.innerHTML = "<p>Não foi possível carregar os dados.</p>";
         return;
     }
 
-    const obras = Array.isArray(resultado.dados) ? resultado.dados : [];
+    const obras = Array.isArray(resultadoObras.dados)
+        ? resultadoObras.dados
+        : [];
+
+    const tarefas = Array.isArray(resultadoTarefas.dados)
+        ? resultadoTarefas.dados
+        : [];
+
     totalObrasEl.textContent = obras.length;
-    obrasAndamentoEl.textContent = obras.filter(o => o.status === "em_andamento").length;
-    totalTarefasEl.textContent = "0";
-    tarefasPendentesEl.textContent = "0";
+
+    obrasAndamentoEl.textContent =
+        obras.filter(o => o.status === "em_andamento").length;
+
+    totalTarefasEl.textContent = tarefas.length;
+
+    tarefasPendentesEl.textContent =
+        tarefas.filter(t => t.status === "pendente").length;
 
     mostrarObrasRecentes(obras);
 }

@@ -1,5 +1,6 @@
 package br.com.ProjetoIntegrador.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -16,6 +17,7 @@ public class Usuario {
     @Column(unique = true)
     private String email;
 
+    @JsonIgnore
     @Column(name = "senha")
     private String senhaHash;
 

@@ -39,7 +39,7 @@
     <!-- ── Conteúdo ── -->
     <main class="conteudo">
         <div class="topbar">
-            <button class="btn-menu" id="btn-menu">☰</button>
+            <button class="btn-menu" id="btn-menu" style="cursor: none;">☰</button>
             <div class="topbar-titulo">Obras</div>
             <div class="topbar-acoes">
                 <button class="btn btn-primario" id="btn-nova-obra">+ Nova Obra</button>
@@ -157,7 +157,8 @@
         const usuario = verificarSessao();
         document.getElementById("usuario-nome").textContent  = usuario.nome;
         document.getElementById("usuario-cargo").textContent = usuario.cargo;
-        document.getElementById("usuario-avatar").textContent = usuario.nome[0];
+        document.getElementById("usuario-avatar").textContent =
+        usuario.nome?.[0]?.toUpperCase() || "U";
 
         await carregarObras();
 
@@ -194,7 +195,7 @@
                 <td><strong>${o.nome}</strong></td>
                 <td style="max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${o.endereco}</td>
                 <td><span class="badge ${classBadge(o.status)}">${labelStatus(o.status)}</span></td>
-                <td>${formatarMoeda(o.orcamento)}</td>
+                <td>${formatarMoeda(o.orcamento ?? 0)}</td>
                 <td>${formatarData(o.data_inicio)}</td>
                 <td>${formatarData(o.data_prevista_fim)}</td>
                 <td>
@@ -253,7 +254,7 @@
             nome:             f.nome.value,
             endereco:         f.endereco.value,
             status:           f.status.value,
-            orcamento:        f.orcamento.value || 0,
+            orcamento: Number(f.orcamento.value) || 0,
             data_inicio:      f.data_inicio.value || null,
             data_prevista_fim: f.data_prevista_fim.value || null,
             descricao:        f.descricao.value

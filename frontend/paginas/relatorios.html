@@ -37,7 +37,10 @@
 
     <main class="conteudo">
         <div class="topbar">
-            <button class="btn-menu" id="btn-menu">☰</button>
+            <button class="btn-menu" id="btn-menu" style="cursor: none;">☰</button>
+            <button class="btn btn-secundario btn-exportar">
+            ⬇ Exportar PDF
+            </button>
             <div class="topbar-titulo">Relatórios</div>
         </div>
 
@@ -124,7 +127,8 @@
         const usuario = verificarSessao();
         document.getElementById("usuario-nome").textContent   = usuario.nome;
         document.getElementById("usuario-cargo").textContent  = usuario.cargo;
-        document.getElementById("usuario-avatar").textContent = usuario.nome[0];
+        document.getElementById("usuario-avatar").textContent =
+        usuario.nome?.[0]?.toUpperCase() || "U";
         document.getElementById("btn-logout").addEventListener("click", async () => {
             await Auth.logout(); sessionStorage.clear(); window.location.href = "login.html";
         });

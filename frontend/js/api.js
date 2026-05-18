@@ -96,6 +96,10 @@ const ObrasAPI = {
         return chamarAPI("/obras", montarOpcoes("GET"));
     },
 
+    async buscar(id) {
+    return chamarAPI(`/obras/${id}`, montarOpcoes("GET"));
+},
+
     async criar(dados) {
         return chamarAPI("/obras", montarOpcoes("POST", dados));
     },
@@ -103,11 +107,51 @@ const ObrasAPI = {
     async atualizar(id, dados) {
         return chamarAPI(`/obras/${id}`, montarOpcoes("PUT", dados));
     },
+    
 
     async deletar(id) {
         return chamarAPI(`/obras/${id}`, montarOpcoes("DELETE"));
     }
+
+    
+
 };
+
+const TarefasAPI = {
+    async listar() {
+        return chamarAPI("/tarefas", montarOpcoes("GET"));
+    },
+
+    async criar(dados) {
+        return chamarAPI("/tarefas", montarOpcoes("POST", dados));
+    },
+
+    async atualizar(id, dados) {
+        return chamarAPI(`/tarefas/${id}`, montarOpcoes("PUT", dados));
+    },
+
+    async deletar(id) {
+        return chamarAPI(`/tarefas/${id}`, montarOpcoes("DELETE"));
+    }
+};
+
+async function preencherObras() {
+    const res = await ObrasAPI.listar();
+    if (!res.sucesso) return;
+
+    const selects = document.querySelectorAll(".select-obra");
+    const obras = Array.isArray(res.dados) ? res.dados : [];
+
+    selects.forEach(sel => {
+        sel.innerHTML = '<option value="">Todas as obras</option>';
+
+        obras.forEach(o => {
+            sel.innerHTML += `<option value="${o.id}">${o.nome || "Obra"}</option>`;
+        });
+    });
+}
+
+
 
 function formatarData(valor) {
     if (!valor) return "";
