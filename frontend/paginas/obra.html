@@ -49,18 +49,22 @@
         <div class="pagina">
 
             <!-- Barra de busca -->
-            <div style="display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap">
-                <input type="text" id="busca" placeholder="🔍  Buscar obra..."
-                       style="flex:1;min-width:200px;padding:9px 14px;border:1px solid var(--cor-borda);border-radius:var(--raio);font-size:0.875rem">
-                <select id="filtro-status"
-                        style="padding:9px 12px;border:1px solid var(--cor-borda);border-radius:var(--raio);font-size:0.875rem">
-                    <option value="">Todos os status</option>
-                    <option value="planejamento">Planejamento</option>
-                    <option value="em_andamento">Em Andamento</option>
-                    <option value="pausada">Pausada</option>
-                    <option value="concluida">Concluída</option>
-                    <option value="cancelada">Cancelada</option>
-                </select>
+            <div class="toolbar">
+                <div class="toolbar-busca">
+                    <span class="icone-busca">🔍</span>
+                    <input type="text" id="busca" placeholder="Buscar obra...">
+                </div>
+
+                <div class="filtros">
+                    <select id="filtro-status">
+                        <option value="">Todos os status</option>
+                        <option value="planejamento">Planejamento</option>
+                        <option value="em_andamento">Em andamento</option>
+                        <option value="pausada">Pausada</option>
+                        <option value="concluida">Concluída</option>
+                        <option value="cancelada">Cancelada</option>
+                    </select>
+                </div>
             </div>
 
             <!-- Tabela -->
