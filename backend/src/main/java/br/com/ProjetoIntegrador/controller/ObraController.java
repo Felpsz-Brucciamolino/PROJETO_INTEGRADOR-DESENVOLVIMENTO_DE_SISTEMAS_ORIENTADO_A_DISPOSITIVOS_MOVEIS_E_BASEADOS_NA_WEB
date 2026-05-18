@@ -1,7 +1,7 @@
 package br.com.ProjetoIntegrador.controller;
 
-import br.com.obras.ProjetoIntegrador.entity.Obra;
-import br.com.obras.ProjetoIntegrador.repository.ObraRepository;
+import br.com.ProjetoIntegrador.entity.Obra;
+import br.com.ProjetoIntegrador.repository.ObraRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

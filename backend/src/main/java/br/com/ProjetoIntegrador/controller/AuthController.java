@@ -1,9 +1,9 @@
 package br.com.ProjetoIntegrador.controller;
 
-import br.com.obras.ProjetoIntegrador.dto.UsuarioDTO;
-import br.com.obras.ProjetoIntegrador.entity.Usuario;
-import br.com.obras.ProjetoIntegrador.repository.UsuarioRepository;
-import br.com.obras.ProjetoIntegrador.util.HashUtil;
+import br.com.ProjetoIntegrador.dto.UsuarioDTO;
+import br.com.ProjetoIntegrador.entity.Usuario;
+import br.com.ProjetoIntegrador.repository.UsuarioRepository;
+import br.com.ProjetoIntegrador.util.HashUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
