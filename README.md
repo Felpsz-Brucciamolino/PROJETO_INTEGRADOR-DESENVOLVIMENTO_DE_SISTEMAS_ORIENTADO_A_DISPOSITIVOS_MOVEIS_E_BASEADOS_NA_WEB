@@ -746,3 +746,227 @@ SOFTWARE.
 [⬆ Voltar ao topo](#sistema-de-gerenciamento-de-obras-da-construção-civil)
 
 </div> 
+
+{
+  "email": "usuario@exemplo.com",
+  "senha": "senha123"
+}
+
+
+**Resposta:**
+- `200 OK` - Login realizado com sucesso
+- `404 Not Found` - Usuário não encontrado
+- `401 Unauthorized` - Senha incorreta
+
+---
+
+### Obras
+
+#### Listar Todas as Obras
+http
+GET /obras
+
+
+**Resposta:**
+json
+[
+  {
+    "id": 1,
+    "nome": "Residencial Flores",
+    "endereco": "Rua das Flores, 123",
+    "status": "em_andamento",
+    "orcamento": 500000.00,
+    "data_inicio": "2024-01-15",
+    "data_prevista_fim": "2024-12-31"
+  }
+]
+
+
+#### Buscar Obra por ID
+http
+GET /obras/{id}
+
+
+#### Criar Nova Obra
+http
+POST /obras
+Content-Type: application/json
+
+{
+  "nome": "Residencial Flores",
+  "cliente": "João Silva",
+  "endereco": "Rua das Flores, 123",
+  "orcamento": 500000.00,
+  "data_inicio": "2024-01-15",
+  "data_prevista_fim": "2024-12-31",
+  "status": "planejamento",
+  "descricao": "Construção de residencial padrão alto",
+  "responsavel_id": 1
+}
+
+
+#### Atualizar Obra
+http
+PUT /obras/{id}
+Content-Type: application/json
+
+{
+  "nome": "Residencial Flores (Atualizado)",
+  "cliente": "João Silva",
+  "endereco": "Rua das Flores, 123",
+  "orcamento": 550000.00,
+  "data_inicio": "2024-01-15",
+  "data_prevista_fim": "2025-01-31",
+  "status": "em_andamento",
+  "descricao": "Construção de residencial padrão alto",
+  "responsavel_id": 1
+}
+
+
+#### Deletar Obra
+http
+DELETE /obras/{id}
+
+
+---
+
+### Tarefas
+
+#### Listar Todas as Tarefas
+http
+GET /tarefas
+
+
+**Resposta:**
+json
+[
+  {
+    "id": 1,
+    "titulo": "Fundação",
+    "descricao": "Escavação e preparação do terreno",
+    "status": "concluida",
+    "prioridade": "alta",
+    "responsavel": "Engenheiro Carlos",
+    "prazo": "2024-02-28",
+    "obra_id": 1
+  }
+]
+
+
+#### Criar Nova Tarefa
+http
+POST /tarefas
+Content-Type: application/json
+
+{
+  "titulo": "Alvenaria",
+  "descricao": "Elevação das paredes",
+  "status": "pendente",
+  "prioridade": "media",
+  "responsavel": "Mestre João",
+  "prazo": "2024-04-30",
+  "obra_id": 1
+}
+
+
+#### Atualizar Tarefa
+http
+PUT /tarefas/{id}
+Content-Type: application/json
+
+{
+  "titulo": "Alvenaria",
+  "descricao": "Elevação das paredes - 1º andar",
+  "status": "em_andamento",
+  "prioridade": "alta",
+  "responsavel": "Mestre João",
+  "prazo": "2024-05-15",
+  "obra_id": 1
+}
+
+
+#### Deletar Tarefa
+http
+DELETE /tarefas/{id}
+```
+
+---
+
+## 🗄️ Banco de Dados
+
+### Estrutura do Banco
+
+#### Tabela usuarios
+Armazena os usuários do sistema com seus perfis de acesso.
+
+| Coluna | Tipo | Descrição |
+|--------|------|-----------|
+| id | SERIAL | Chave primária |
+| nome | VARCHAR(100) | Nome do usuário |
+| email | VARCHAR(100) | Email único do usuário |
+| senha | VARCHAR(64) | Hash da senha |
+| cargo | cargo_usuario | Perfil (admin, engenheiro, mestre_de_obras, operário) |
+| criado_em | TIMESTAMP | Data de criação |
+
+#### Tabela obras
+Armazena as informações das obras de construção.
+
+| Coluna | Tipo | Descrição |
+|--------|------|-----------|
+| id | SERIAL | Chave primária |
+| nome | VARCHAR(150) | Nome da obra |
+| endereco | VARCHAR(255) | Endereço da obra |
+| status | status_obra | Status (planejamento, em_andamento, pausada, concluida, cancelada) |
+| descricao | TEXT | Descrição detalhada |
+| orcamento | DECIMAL(15,2) | Orçamento da obra |
+| data_inicio | DATE | Data de início |
+| data_prevista_fim | DATE | Data prevista de conclusão |
+| criado_em | TIMESTAMP | Data de criação |
+
+#### Tabela tarefas
+Armazena as tarefas vinculadas às obras.
+
+| Coluna | Tipo | Descrição |
+|--------|------|-----------|
+| id | SERIAL | Chave primária |
+| titulo | VARCHAR(150) | Título da tarefa |
+| descricao | TEXT | Descrição da tarefa |
+| status | status_tarefa | Status (pendente, em_andamento, concluida, cancelada) |
+| prioridade | prioridade_tarefa | Prioridade (baixa, media, alta, urgente) |
+| obra_id | INT | Chave estrangeira para obras |
+| responsavel | VARCHAR(100) | Responsável pela tarefa |
+| prazo | DATE | Prazo de conclusão |
+| criado_em | TIMESTAMP | Data de criação |
+
+### Tipos Enumerados
+
+#### cargo_usuario
+- admin
+- engenheiro
+- mestre_de_obras
+- operario
+
+#### status_obra
+- planejamento
+- em_andamento
+- pausada
+- concluida
+- cancelada
+
+#### status_tarefa
+- pendente
+- em_andamento
+- concluida
+- cancelada
+
+#### prioridade_tarefa
+- baixa
+- media
+- alta
+- urgente
+
+### Relacionamentos
+
+- *Um usuário pode ser responsável por várias obras* (ManyToOne em obras)
+- *Uma obra possui várias tarefas* (OneToMany em tarefas)
+- *Uma tarefa está vinculada a uma obra* (ManyToOne em tarefas)
