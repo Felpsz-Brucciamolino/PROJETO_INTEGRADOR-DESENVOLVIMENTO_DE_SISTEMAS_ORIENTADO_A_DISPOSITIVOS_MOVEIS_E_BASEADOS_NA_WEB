@@ -394,6 +394,22 @@ tbody td {
     box-shadow: 0 0 0 3px rgba(201,160,80,.15);
 }
 
+.usuario-config {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.12);
+    text-decoration: none;
+    flex-shrink: 0;
+    transition: transform 0.3s, background 0.2s;
+}
+.usuario-config:hover,
+.usuario-config.ativo { background: rgba(255, 255, 255, 0.22); }
+.usuario-config:hover { transform: rotate(60deg); }
+
 
 @media (max-width: 768px) {
     .form-linha {
