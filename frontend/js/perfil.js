@@ -12,10 +12,10 @@ document.addEventListener("DOMContentLoaded", () => {
     /* ---------- Elementos ---------- */
     const el = (id) => document.getElementById(id);
 
-    const formDados = el("form-dados");
     const formSenha = el("form-senha");
-    const campoNome = el("campo-nome");
-    const campoEmail = el("campo-email");
+    const displayNome = el("display-nome");
+    const displayEmail = el("display-email");
+    const btnEditar = el("btn-editar-dados");
     const avisoBox = el("perfil-aviso");
 
     /* ---------- Sessão ---------- */
@@ -61,13 +61,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* ---------- Preenchimento inicial ---------- */
     atualizarTela(usuario);
-    campoNome.value  = usuario.nome  || "";
-    campoEmail.value = usuario.email || "";
+    if (displayNome) displayNome.textContent = usuario.nome || "Não informado";
+    if (displayEmail) displayEmail.textContent = usuario.email || "Não informado";
 
     /* ---------- Menu e logout (igual às outras páginas) ---------- */
-    el("btn-menu").addEventListener("click", () => {
-        document.querySelector(".sidebar").classList.toggle("aberta");
-    });
 
     el("btn-logout").addEventListener("click", async () => {
         await Auth.logout();
@@ -75,46 +72,63 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = "login.html";
     });
 
-    /* ---------- Salvar nome e e-mail ---------- */
-    formDados.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        limparErros(["campo-nome", "erro-nome"], ["campo-email", "erro-email"]);
+    /* ---------- Editar nome e e-mail via Prompt ---------- */
+    if (btnEditar) {
+        btnEditar.addEventListener("click", async () => {
+            const novoNome = prompt("Digite o novo nome de usuário:", usuario.nome || "");
+            if (novoNome === null) return; // Cancelou
+            
+            const novoEmail = prompt("Digite o novo e-mail:", usuario.email || "");
+            if (novoEmail === null) return; // Cancelou
+            
+            const nome = novoNome.trim();
+            const email = novoEmail.trim();
 
-        const nome = campoNome.value.trim();
-        const email = campoEmail.value.trim();
-        let valido = true;
+            if (nome.length < 3) {
+                mostrarAviso("Digite um nome com pelo menos 3 caracteres.", "erro");
+                return;
+            }
+            if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                mostrarAviso("Digite um e-mail válido.", "erro");
+                return;
+            }
 
-        if (nome.length < 3) {
-            erroCampo("campo-nome", "erro-nome", "Digite um nome com pelo menos 3 caracteres.");
-            valido = false;
-        }
-        if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            erroCampo("campo-email", "erro-email", "Digite um e-mail válido, como nome@empresa.com.");
-            valido = false;
-        }
-        if (!valido) return;
+            try {
+                const btnTextoOriginal = btnEditar.innerHTML;
+                btnEditar.innerHTML = "Salvando...";
+                btnEditar.disabled = true;
 
-        try {
-            /* ► PONTO OPCIONAL: se o nome também deve mudar no banco,
-                 chame sua API aqui. Exemplo (ajuste ao seu api.js):
-                 await Usuarios.atualizar(usuario.id, { nome });          */
+                const res = await UsuariosAPI.atualizar(usuario.id, { nome, email });
 
-            const chave = obterChaveSessao();
-            let atual = {};
-            try { atual = JSON.parse(sessionStorage.getItem(chave)) || {}; } catch (_) {}
+                btnEditar.innerHTML = btnTextoOriginal;
+                btnEditar.disabled = false;
 
-            const atualizado = { ...usuario, ...atual, nome, email };
-            sessionStorage.setItem(chave, JSON.stringify(atualizado));
+                if (!res.sucesso) {
+                    mostrarAviso(res.erro || "Não foi possível salvar os dados.", "erro");
+                    return;
+                }
 
-            atualizarTela(atualizado);
-            mostrarAviso("Dados atualizados com sucesso.", "sucesso");
-        } catch (err) {
-            mostrarAviso("Não foi possível salvar os dados. Tente novamente.", "erro");
-        }
-    });
+                const chave = obterChaveSessao();
+                let atual = {};
+                try { atual = JSON.parse(sessionStorage.getItem(chave)) || {}; } catch (_) {}
 
-    /* ---------- Alterar senha (sem persistência) ---------- */
-    formSenha.addEventListener("submit", (e) => {
+                const atualizado = { ...usuario, ...atual, nome, email };
+                sessionStorage.setItem(chave, JSON.stringify(atualizado));
+
+                atualizarTela(atualizado);
+                displayNome.textContent = nome || "Não informado";
+                displayEmail.textContent = email || "Não informado";
+                
+                mostrarAviso("Dados atualizados com sucesso.", "sucesso");
+            } catch (err) {
+                mostrarAviso("Não foi possível salvar os dados. Tente novamente.", "erro");
+                btnEditar.disabled = false;
+            }
+        });
+    }
+
+    /* ---------- Alterar senha ---------- */
+    formSenha.addEventListener("submit", async (e) => {
         e.preventDefault();
         limparErros(
             ["senha-atual", "erro-senha-atual"],
@@ -144,7 +158,29 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         if (!valido) return;
 
-        formSenha.reset();
-        mostrarAviso("Senha alterada com sucesso.", "sucesso");
+        try {
+            const btn = formSenha.querySelector("button[type='submit']");
+            const btnTextoOriginal = btn.textContent;
+            btn.textContent = "Alterando...";
+            btn.disabled = true;
+
+            const res = await UsuariosAPI.alterarSenha(usuario.id, {
+                senhaAtual: atual,
+                novaSenha: nova
+            });
+
+            btn.textContent = btnTextoOriginal;
+            btn.disabled = false;
+
+            if (!res.sucesso) {
+                mostrarAviso(res.erro || "Não foi possível alterar a senha.", "erro");
+                return;
+            }
+
+            formSenha.reset();
+            mostrarAviso("Senha alterada com sucesso.", "sucesso");
+        } catch (err) {
+            mostrarAviso("Não foi possível alterar a senha. Tente novamente.", "erro");
+        }
     });
 });

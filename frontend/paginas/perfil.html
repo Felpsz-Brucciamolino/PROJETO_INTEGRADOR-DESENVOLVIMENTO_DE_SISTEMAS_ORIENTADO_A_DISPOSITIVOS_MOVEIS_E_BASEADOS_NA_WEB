@@ -37,7 +37,6 @@
 
     <main class="conteudo">
         <div class="topbar">
-            <button class="btn-menu" id="btn-menu">☰</button>
             <div class="topbar-titulo">Minha Conta</div>
         </div>
 
@@ -58,23 +57,21 @@
             <div class="perfil-grid">
 
                 <!-- Dados da conta -->
-                <form class="perfil-card" id="form-dados" novalidate>
+                <div class="perfil-card" id="card-dados">
                     <div class="perfil-card-titulo">👤 Dados da conta</div>
 
-                    <div class="form-grupo">
-                        <label for="campo-nome">Nome de usuário</label>
-                        <input type="text" id="campo-nome" maxlength="60" autocomplete="name" required>
-                        <small class="campo-erro" id="erro-nome"></small>
+                    <div class="dado-item">
+                        <div class="dado-label">Nome de usuário</div>
+                        <div class="dado-valor" id="display-nome">—</div>
                     </div>
 
-                    <div class="form-grupo">
-                        <label for="campo-email">E-mail</label>
-                        <input type="email" id="campo-email" autocomplete="email" placeholder="voce@empresa.com">
-                        <small class="campo-erro" id="erro-email"></small>
+                    <div class="dado-item">
+                        <div class="dado-label">E-mail</div>
+                        <div class="dado-valor" id="display-email">—</div>
                     </div>
 
-                    <button type="submit" class="btn btn-primario btn-salvar">Salvar alterações</button>
-                </form>
+                    <button type="button" class="btn btn-secundario btn-salvar" id="btn-editar-dados" style="margin-top: 16px;">✏️ Editar dados</button>
+                </div>
 
                 <!-- Alterar senha -->
                 <form class="perfil-card" id="form-senha" novalidate>
@@ -100,6 +97,46 @@
 
                     <button type="submit" class="btn btn-primario btn-salvar">Alterar senha</button>
                 </form>
+
+                <!-- Preferências (Apenas Visual) -->
+                <div class="perfil-card">
+                    <div class="perfil-card-titulo">⚙️ Preferências</div>
+
+                    <div class="preferencias-lista">
+                        <div class="pref-item">
+                            <div>
+                                <div class="pref-titulo">Notificações de Tarefas</div>
+                                <div class="pref-desc">Receba alertas sobre tarefas atrasadas.</div>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="pref-item">
+                            <div>
+                                <div class="pref-titulo">Modo Escuro</div>
+                                <div class="pref-desc">Altere o tema visual da aplicação.</div>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="pref-item">
+                            <div>
+                                <div class="pref-titulo">Autenticação em Dois Fatores (2FA)</div>
+                                <div class="pref-desc">Maior segurança para o seu acesso.</div>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>

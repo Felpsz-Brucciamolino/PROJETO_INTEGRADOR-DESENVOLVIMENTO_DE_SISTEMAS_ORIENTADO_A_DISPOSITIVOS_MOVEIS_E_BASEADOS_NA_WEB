@@ -27,7 +27,7 @@ public class AuthController {
         }
 
         if(usuario.getSenhaHash().equals(HashUtil.gerarHash(dados.senha()))) {
-            return ResponseEntity.ok().body("Login realizado com sucesso");
+            return ResponseEntity.ok().body(usuario);
         }
         
         return ResponseEntity.status(401).body("Senha incorreta");

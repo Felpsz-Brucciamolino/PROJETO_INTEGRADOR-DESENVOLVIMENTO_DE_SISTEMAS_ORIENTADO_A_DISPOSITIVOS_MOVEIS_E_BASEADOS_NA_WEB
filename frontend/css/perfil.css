@@ -16,8 +16,8 @@
     width: 64px;
     height: 64px;
     border-radius: 50%;
-    background: var(--cor-primaria, #f59e0b);
-    color: #fff;
+    background: var(--cor-primaria);
+    color: #121212;
     font-size: 1.6rem;
     font-weight: 700;
     display: flex;
@@ -26,8 +26,8 @@
     flex-shrink: 0;
 }
 
-.perfil-nome  { font-size: 1.15rem; font-weight: 700; color: var(--cor-texto, #1f2937); }
-.perfil-cargo { font-size: 0.85rem; color: var(--cor-texto-claro, #6b7280); margin-top: 2px; }
+.perfil-nome  { font-size: 1.15rem; font-weight: 700; color: var(--cor-texto); }
+.perfil-cargo { font-size: 0.85rem; color: var(--cor-texto-claro); margin-top: 2px; }
 
 /* ---------- Grid de cards ---------- */
 .perfil-grid {
@@ -38,11 +38,11 @@
 }
 
 .perfil-card {
-    background: var(--cor-fundo-card, #fff);
-    border: 1px solid var(--cor-borda, #e5e7eb);
+    background: var(--cor-card);
+    border: 1px solid var(--cor-borda);
     border-radius: 12px;
     padding: 24px;
-    box-shadow: var(--sombra, 0 1px 3px rgba(0, 0, 0, 0.06));
+    box-shadow: var(--sombra);
 }
 
 .perfil-card-titulo {
@@ -51,31 +51,22 @@
     margin-bottom: 18px;
 }
 
-.perfil-card .form-grupo { margin-bottom: 16px; }
+/* The rest of .form-grupo styling is inherited from style.css */
 
-.perfil-card .form-grupo label {
-    display: block;
+.dado-item {
+    margin-bottom: 16px;
+}
+
+.dado-label {
     font-size: 0.85rem;
     font-weight: 600;
-    margin-bottom: 6px;
+    color: var(--cor-primaria);
+    margin-bottom: 4px;
 }
 
-.perfil-card .form-grupo input {
-    width: 100%;
-    padding: 10px 12px;
-    font: inherit;
-    font-size: 0.9rem;
-    border: 1px solid var(--cor-borda, #d1d5db);
-    border-radius: 8px;
-    background: var(--cor-fundo-input, #fff);
-    color: inherit;
-    box-sizing: border-box;
-}
-
-.perfil-card .form-grupo input:focus {
-    outline: none;
-    border-color: var(--cor-primaria, #f59e0b);
-    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+.dado-valor {
+    font-size: 1rem;
+    color: var(--cor-texto);
 }
 
 .perfil-card .form-grupo input.invalido { border-color: #dc2626; }
@@ -104,6 +95,89 @@
 .perfil-aviso.visivel { display: block; }
 .perfil-aviso.sucesso { background: #dcfce7; color: #166534; }
 .perfil-aviso.erro    { background: #fee2e2; color: #991b1b; }
+
+/* ---------- Switches / Preferências ---------- */
+.preferencias-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.pref-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--cor-borda, #e5e7eb);
+}
+
+.pref-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.pref-titulo {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--cor-texto);
+}
+
+.pref-desc {
+    font-size: 0.8rem;
+    color: var(--cor-texto-claro);
+    margin-top: 4px;
+}
+
+/* Switch Toggle CSS */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #333;
+    transition: .4s;
+    border-radius: 24px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: #fff;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--cor-primaria);
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 0 3px rgba(201,160,80,0.15);
+}
+
+input:checked + .slider:before {
+    transform: translateX(20px);
+}
 
 /* ---------- Responsivo ---------- */
 @media (max-width: 800px) {

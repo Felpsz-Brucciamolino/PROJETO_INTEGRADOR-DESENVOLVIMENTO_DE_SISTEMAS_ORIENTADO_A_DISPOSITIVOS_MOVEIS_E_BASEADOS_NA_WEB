@@ -68,8 +68,8 @@ function verificarSessao() {
 }
 
 const Auth = {
-async login(email, senha) {
-    const res = await chamarAPI("/login", montarOpcoes("POST", { email, senha }));
+    async login(email, senha) {
+        const res = await chamarAPI("/login", montarOpcoes("POST", { email, senha }));
         if (!res.sucesso) {
             return res;
         }
@@ -77,10 +77,7 @@ async login(email, senha) {
         return {
             sucesso: true,
             dados: {
-                usuario: {
-                    nome: email.split("@")[0],
-                    email
-                }
+                usuario: res.dados
             }
         };
     },
@@ -88,6 +85,16 @@ async login(email, senha) {
     logout() {
         sessionStorage.clear();
         window.location.href = "login.html";
+    }
+};
+
+const UsuariosAPI = {
+    async atualizar(id, dados) {
+        return chamarAPI(`/usuarios/${id}`, montarOpcoes("PUT", dados));
+    },
+
+    async alterarSenha(id, dados) {
+        return chamarAPI(`/usuarios/${id}/senha`, montarOpcoes("PUT", dados));
     }
 };
 
