@@ -95,11 +95,13 @@ Este sistema resolve esses problemas oferecendo uma plataforma integrada para ge
 ### Relatórios e Dashboard
 - ✅ Dashboard com visão geral das obras
 - ✅ Relatórios de progresso das tarefas
-- ✅ Análise de status e prazos
+- ✅ Exportação de relatórios em PDF dinâmico
 - ✅ Visualização de métricas importantes
 
 ### Diferenciais do Projeto
-- 🚀 Arquitetura RESTful moderna
+- 🚀 Arquitetura RESTful moderna (Spring Boot) preparada para nuvem (Supabase)
+- 📱 Progressive Web App (PWA) com funcionamento Offline-First e sincronização em background
+- 📸 Upload de evidências fotográficas vinculadas às tarefas
 - 🔒 Segurança com Spring Security
 - 📊 Migrations automáticas com Flyway
 - 🎨 Interface responsiva, padronizada e refinada no tema Dark Gold
@@ -664,18 +666,16 @@ curl -X POST http://localhost:5030/login \
 
 ### Versão 1.1 (Próximo)
 - [ ] Autenticação com JWT
-- [ ] Upload de fotos e documentos
-- [ ] Notificações de prazos
-- [ ] Histórico de alterações
+- [ ] Notificações push e webhooks
+- [ ] Histórico de alterações detalhado
 - [ ] Filtros avançados
+- [ ] Sistema de aprovações
 
 ### Versão 2.0 (Futuro)
-- [ ] Aplicação mobile (React Native)
+- [ ] Aplicação mobile nativa (React Native)
 - [ ] Integração com APIs externas (clima, materiais)
-- [ ] Sistema de aprovações
-- [ ] Gráficos avançados e analytics
+- [ ] Gráficos avançados e analytics (PowerBI)
 - [ ] Multi-tenancy
-- [ ] Exportação de relatórios em PDF/Excel
 
 ---
 

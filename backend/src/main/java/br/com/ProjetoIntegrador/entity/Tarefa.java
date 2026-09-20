@@ -25,6 +25,10 @@ public class Tarefa {
     @JoinColumn(name = "obra_id")
     private Obra obra;
 
+    @JsonIgnoreProperties("tarefa")
+    @OneToMany(mappedBy = "tarefa", cascade = CascadeType.ALL, orphanRemoval = true)
+    private java.util.List<Evidencia> evidencias;
+
     // GETTERS E SETTERS
 
     public Long getId() {
@@ -89,5 +93,13 @@ public class Tarefa {
 
     public void setPrazo(LocalDate prazo) {
         this.prazo = prazo;
+    }
+
+    public java.util.List<Evidencia> getEvidencias() {
+        return evidencias;
+    }
+
+    public void setEvidencias(java.util.List<Evidencia> evidencias) {
+        this.evidencias = evidencias;
     }
 }

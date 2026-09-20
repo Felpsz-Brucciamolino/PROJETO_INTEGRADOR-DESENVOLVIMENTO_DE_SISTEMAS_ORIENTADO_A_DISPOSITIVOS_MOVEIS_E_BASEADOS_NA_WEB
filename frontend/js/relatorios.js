@@ -5,7 +5,33 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     document.getElementById("filtro-obra")
         .addEventListener("change", carregarRelatorios);
+
+    const btnExportar = document.querySelector(".btn-exportar");
+    if (btnExportar) {
+        btnExportar.addEventListener("click", exportarParaPDF);
+    }
 });
+
+// ==========================
+// EXPORTAR PARA PDF
+// ==========================
+function exportarParaPDF() {
+    const elemento = document.querySelector(".pagina");
+    
+    // Configurações do html2pdf
+    const opt = {
+        margin:       10,
+        filename:     'relatorio_gerobras.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+    
+    // Gerar o PDF
+    html2pdf().set(opt).from(elemento).save().then(() => {
+        console.log("PDF gerado com sucesso.");
+    });
+}
 
 // ==========================
 // CARREGAR RELATÓRIOS

@@ -1,5 +1,51 @@
 const BASE_URL = "http://localhost:5030";
 
+// --- PWA: Service Worker Registration ---
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').then(registration => {
+      console.log('SW registered: ', registration);
+    }).catch(registrationError => {
+      console.log('SW registration failed: ', registrationError);
+    });
+  });
+}
+
+// --- Offline Queue Logic ---
+const OFFLINE_QUEUE_KEY = 'gerobras_offline_queue';
+
+function getOfflineQueue() {
+    return JSON.parse(localStorage.getItem(OFFLINE_QUEUE_KEY) || '[]');
+}
+
+function saveToOfflineQueue(request) {
+    const queue = getOfflineQueue();
+    queue.push(request);
+    localStorage.setItem(OFFLINE_QUEUE_KEY, JSON.stringify(queue));
+    console.log("Requisição salva offline:", request);
+}
+
+async function syncOfflineQueue() {
+    const queue = getOfflineQueue();
+    if (queue.length === 0) return;
+    
+    console.log(`Sincronizando ${queue.length} requisições offline...`);
+    const remainingQueue = [];
+    
+    for (const req of queue) {
+        try {
+            await fetch(BASE_URL + req.endpoint, req.options);
+            console.log("Sincronizado:", req.endpoint);
+        } catch (error) {
+            remainingQueue.push(req);
+        }
+    }
+    
+    localStorage.setItem(OFFLINE_QUEUE_KEY, JSON.stringify(remainingQueue));
+}
+
+window.addEventListener('online', syncOfflineQueue);
+
 function montarOpcoes(metodo, corpo) {
     const opcoes = {
         method: metodo,
@@ -15,9 +61,9 @@ function montarOpcoes(metodo, corpo) {
     return opcoes;
 }
 
-async function chamarAPI(url, opcoes) {
+async function chamarAPI(endpoint, opcoes = {}) {
     try {
-        const resp = await fetch(BASE_URL + url, opcoes);
+        const resp = await fetch(BASE_URL + endpoint, opcoes);
 
         const texto = await resp.text();
 
@@ -40,14 +86,16 @@ async function chamarAPI(url, opcoes) {
             dados
         };
 
-    } catch (err) {
-        const mensagem = err?.message || String(err);
-        console.error(`Erro em ${url}:`, mensagem);
+    } catch (erro) {
+        console.error(`Erro em ${endpoint}:`, erro);
+        
+        // Se falhou por erro de rede (Failed to fetch) e for mutação, salva offline
+        if (erro instanceof TypeError && opcoes.method && opcoes.method !== 'GET') {
+            saveToOfflineQueue({ endpoint, options: opcoes, id: Date.now() });
+            return { sucesso: true, dados: { offline: true }, offline: true };
+        }
 
-        return {
-            sucesso: false,
-            erro: mensagem
-        };
+        return { sucesso: false, erro: erro.message };
     }
 }
 

@@ -172,7 +172,14 @@
         document.getElementById("btn-logout").addEventListener("click", async () => {
             await Auth.logout(); sessionStorage.clear(); window.location.href = "login.html";
         });
-});
+        
+        // Fechar clicando fora
+        document.getElementById("modal-obra").addEventListener("click", (e) => {
+            if (e.target.id === "modal-obra") {
+                fecharModal();
+            }
+        });
+    });
 
     async function carregarObras() {
         const res = await ObrasAPI.listar();
@@ -220,7 +227,7 @@
     function abrirModalNova() {
         obraEditando = null;
         document.getElementById("modal-titulo").textContent = "Nova Obra";
-        document.getElementById("form-obra").reset();
+        // document.getElementById("form-obra").reset(); // removido para preservar dados
         document.getElementById("modal-obra").classList.add("ativo");
     }
 
@@ -262,6 +269,7 @@
             : await ObrasAPI.criar(dados);
         if (res.sucesso) {
             toast(obraEditando ? "Obra atualizada!" : "Obra criada!", "sucesso");
+            f.reset(); // Limpa o formulário apenas após salvar com sucesso
             fecharModal();
             await carregarObras();
         } else {

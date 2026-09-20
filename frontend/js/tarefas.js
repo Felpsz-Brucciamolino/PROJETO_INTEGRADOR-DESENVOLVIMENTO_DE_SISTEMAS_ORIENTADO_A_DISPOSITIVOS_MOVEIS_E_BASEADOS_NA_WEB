@@ -31,6 +31,12 @@ function inicializarEventos() {
 
     document.getElementById("filtro-prioridade")
         .addEventListener("change", carregarTarefas);
+
+    document.getElementById("modal-tarefa").addEventListener("click", function(e) {
+        if (e.target === this) {
+            fecharModal();
+        }
+    });
 }
 
 // ==========================
@@ -123,8 +129,12 @@ function criarCard(tarefa) {
 
     div.className = `tarefa-card prioridade-${tarefa.prioridade}`;
 
+    const tituloHtml = tarefa.offline 
+        ? `<div class="tarefa-titulo">⏳ [OFFLINE] ${tarefa.titulo}</div>` 
+        : `<div class="tarefa-titulo">${tarefa.titulo}</div>`;
+
     div.innerHTML = `
-        <div class="tarefa-titulo">${tarefa.titulo}</div>
+        ${tituloHtml}
 
         <div class="tarefa-descricao">
             ${tarefa.descricao || "Sem descrição"}
@@ -151,7 +161,7 @@ function criarCard(tarefa) {
 function abrirModalNova() {
     const form = document.getElementById("form-tarefa");
 
-    form.reset();
+    // form.reset(); // removido para preservar os dados que estavam sendo digitados
     form.dataset.editando = "";
 
     document.getElementById("modal-titulo").textContent = "Nova Tarefa";
@@ -200,6 +210,30 @@ async function salvarTarefa(e) {
         return;
     }
 
+    const tarefaCriada = res.dados;
+    const fileInput = document.getElementById("evidencia-file");
+    
+    // Upload evidence if online and file selected
+    if (fileInput && fileInput.files.length > 0 && !res.offline && (tarefaCriada && tarefaCriada.id)) {
+        const file = fileInput.files[0];
+        const formData = new FormData();
+        formData.append("file", file);
+        
+        try {
+            await fetch(`${BASE_URL}/tarefas/${tarefaCriada.id}/evidencias`, {
+                method: "POST",
+                body: formData
+            });
+        } catch (e) {
+            console.error("Failed to upload evidence:", e);
+        }
+    }
+
+    if (res.offline) {
+        alert("Você está offline. A tarefa foi salva localmente e será sincronizada.");
+    }
+
+    form.reset(); // Limpa o formulário apenas após salvar com sucesso
     fecharModal();
     await carregarTarefas();
 }
@@ -287,6 +321,12 @@ async function expandirTarefa(id) {
             </div>
         </div>
     `;
+
+    modal.addEventListener("click", function(e) {
+        if (e.target === this) {
+            fecharDetalhe();
+        }
+    });
 
     modal.style.display = "flex";
 }
