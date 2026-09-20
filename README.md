@@ -12,7 +12,7 @@
 
 ---
 
-**Projeto Integrador desenvolvido para o curso de Tecnologia em Análise e Desenvolvimento de Sistemas (4º período) do SENAC EAD.**
+**Projeto Integrador desenvolvido para o curso de Tecnologia em Análise e Desenvolvimento de Sistemas (5º período primeira entrega) do SENAC Santo Amaro.**
 
 Este projeto tem como objetivo aplicar, de forma prática, os conhecimentos adquiridos em desenvolvimento full stack, modelagem de banco de dados, arquitetura de software e boas práticas de engenharia de software, por meio da construção de um sistema de gerenciamento de obras da construção civil.
 
