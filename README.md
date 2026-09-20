@@ -87,6 +87,8 @@ Este sistema resolve esses problemas oferecendo uma plataforma integrada para ge
 ### Gestão de Usuários
 - ✅ Cadastro de usuários com diferentes perfis (admin, engenheiro, mestre de obras, operário)
 - ✅ Autenticação segura com hash de senhas
+- ✅ Atualização de perfil e dados da conta integrados (Backend/Frontend)
+- ✅ Alteração segura de senhas
 - ✅ Controle de acesso baseado em perfis
 - ✅ Ativação/desativação de usuários
 
@@ -100,7 +102,7 @@ Este sistema resolve esses problemas oferecendo uma plataforma integrada para ge
 - 🚀 Arquitetura RESTful moderna
 - 🔒 Segurança com Spring Security
 - 📊 Migrations automáticas com Flyway
-- 🎨 Interface responsiva e intuitiva
+- 🎨 Interface responsiva, padronizada e refinada no tema Dark Gold
 - 🔄 CORS configurado para integração frontend
 - 📦 Código organizado seguindo boas práticas
 
@@ -347,6 +349,32 @@ Content-Type: application/json
 - `200 OK` - Login realizado com sucesso
 - `404 Not Found` - Usuário não encontrado
 - `401 Unauthorized` - Senha incorreta
+
+---
+
+### Usuários
+
+#### Atualizar Perfil
+```http
+PUT /usuarios/{id}
+Content-Type: application/json
+
+{
+  "nome": "Nome Atualizado",
+  "email": "novoemail@exemplo.com"
+}
+```
+
+#### Alterar Senha
+```http
+PUT /usuarios/{id}/senha
+Content-Type: application/json
+
+{
+  "senhaAtual": "senha_antiga",
+  "novaSenha": "nova_senha_forte"
+}
+```
 
 ---
 
