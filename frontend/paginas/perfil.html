@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Conta — GerObras</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/perfil.css">
+</head>
+<body>
+<div class="layout">
+
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <span class="icone-logo">🏗️</span><span>GerObras</span>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-secao">Principal</div>
+            <a href="dashboard.html"  class="nav-item"><span class="icone">📊</span> Dashboard</a>
+            <a href="obra.html"       class="nav-item"><span class="icone">🏢</span> Obras</a>
+            <a href="tarefas.html"    class="nav-item"><span class="icone">✅</span> Tarefas</a>
+            <div class="nav-secao">Análise</div>
+            <a href="relatorios.html" class="nav-item"><span class="icone">📈</span> Relatórios</a>
+        </nav>
+        <div class="sidebar-rodape">
+            <div class="usuario-info">
+                <a href="perfil.html" class="usuario-config ativo" title="Configurações da conta" aria-label="Configurações da conta">⚙️</a>
+                <div>
+                    <div class="usuario-nome"  id="usuario-nome">—</div>
+                    <div class="usuario-cargo" id="usuario-cargo"></div>
+                </div>
+            </div>
+            <button class="btn-logout" id="btn-logout">🚪 Sair</button>
+        </div>
+    </aside>
+
+    <main class="conteudo">
+        <div class="topbar">
+            <button class="btn-menu" id="btn-menu">☰</button>
+            <div class="topbar-titulo">Minha Conta</div>
+        </div>
+
+        <div class="pagina">
+
+            <!-- Cabeçalho do perfil -->
+            <div class="perfil-cabecalho">
+                <div class="perfil-avatar" id="perfil-avatar">U</div>
+                <div>
+                    <div class="perfil-nome"  id="perfil-nome">—</div>
+                    <div class="perfil-cargo" id="perfil-cargo"></div>
+                </div>
+            </div>
+
+            <!-- Aviso de retorno (sucesso / erro) -->
+            <div class="perfil-aviso" id="perfil-aviso" role="status" aria-live="polite"></div>
+
+            <div class="perfil-grid">
+
+                <!-- Dados da conta -->
+                <form class="perfil-card" id="form-dados" novalidate>
+                    <div class="perfil-card-titulo">👤 Dados da conta</div>
+
+                    <div class="form-grupo">
+                        <label for="campo-nome">Nome de usuário</label>
+                        <input type="text" id="campo-nome" maxlength="60" autocomplete="name" required>
+                        <small class="campo-erro" id="erro-nome"></small>
+                    </div>
+
+                    <div class="form-grupo">
+                        <label for="campo-email">E-mail</label>
+                        <input type="email" id="campo-email" autocomplete="email" placeholder="voce@empresa.com">
+                        <small class="campo-erro" id="erro-email"></small>
+                    </div>
+
+                    <button type="submit" class="btn btn-primario btn-salvar">Salvar alterações</button>
+                </form>
+
+                <!-- Alterar senha -->
+                <form class="perfil-card" id="form-senha" novalidate>
+                    <div class="perfil-card-titulo">🔒 Alterar senha</div>
+
+                    <div class="form-grupo">
+                        <label for="senha-atual">Senha atual</label>
+                        <input type="password" id="senha-atual" autocomplete="current-password">
+                        <small class="campo-erro" id="erro-senha-atual"></small>
+                    </div>
+
+                    <div class="form-grupo">
+                        <label for="senha-nova">Nova senha</label>
+                        <input type="password" id="senha-nova" autocomplete="new-password" placeholder="Mínimo de 6 caracteres">
+                        <small class="campo-erro" id="erro-senha-nova"></small>
+                    </div>
+
+                    <div class="form-grupo">
+                        <label for="senha-confirma">Confirmar nova senha</label>
+                        <input type="password" id="senha-confirma" autocomplete="new-password">
+                        <small class="campo-erro" id="erro-senha-confirma"></small>
+                    </div>
+
+                    <button type="submit" class="btn btn-primario btn-salvar">Alterar senha</button>
+                </form>
+
+            </div>
+        </div>
+    </main>
+</div>
+
+<div id="toast-container"></div>
+
+<script src="../js/api.js"></script>
+<script src="../js/perfil.js"></script>
+</body>
+</html>
